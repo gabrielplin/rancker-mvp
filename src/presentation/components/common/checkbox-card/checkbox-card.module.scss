@@ -1,0 +1,120 @@
+@use 'styles/abstracts/functions' as *;
+
+.checkbox-card {
+  &__label {
+    font-size: rem(16px);
+    font-weight: 500;
+    color: color(text, primary);
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: rem(16px);
+    padding: rem(12px) rem(24px);
+    border-radius: rem(16px);
+    background: #2c2b30; 
+    cursor: pointer;
+    user-select: none;
+    transition: background-color .15s ease;
+
+    &:hover {
+      background: #34333a;
+    }
+  }
+
+  &__item--checked {
+    background: #3a393f;
+  }
+
+  &__input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+
+    &:focus-visible + .checkbox-card__box {
+      outline: 2px solid color(neutrals, white);
+      outline-offset: 3px;
+    }
+
+    &:checked + .checkbox-card__box {
+      background: color(pallete, primary);
+      border-color: transparent;
+    }
+
+    &:checked + .checkbox-card__box .checkbox-card__check {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  &__box {
+    inline-size: rem(30px);
+    block-size: rem(30px);
+    border-radius: rem(8px);
+    border: rem(2px) solid color(neutrals, 004);
+    background: transparent;
+    display: grid;
+    place-items: center;
+    transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+    color: #111;
+    flex: 0 0 auto;
+  }
+
+  &__check {
+    width: rem(28px);
+    height: rem(28px);
+    opacity: 0;
+    transform: scale(.85);
+    transition: opacity .15s ease, transform .15s ease;
+    fill: currentColor;
+  }
+
+  &__label-input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    padding: rem(6px) rem(4px);
+    font-size: rem(20px);
+    color: color(text, primary);
+    height: 48px;
+    border-radius: rem(8px);
+    outline: none;
+
+    &:focus {
+      border: 2px solid color(pallete, primary);
+    }
+  }
+
+  &__add {
+    margin-top: rem(8px);
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+    padding: rem(28px) rem(24px);
+    border-radius: rem(16px);
+    border: 1px dashed color(neutrals, 004);
+    background: transparent;
+    cursor: pointer;
+    font-size: rem(20px);
+    color: color(neutrals, 004);
+    transition: color .15s ease, border-color .15s ease;
+
+    &:hover {
+      border-color: color(neutrals, white);
+      color: color(neutrals, white);
+    }
+  }
+
+  &__add-icon {
+    width: rem(20px);
+    height: rem(20px);
+  }
+}

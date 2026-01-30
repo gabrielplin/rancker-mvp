@@ -1,0 +1,85 @@
+@use 'styles/abstracts/breakpoints' as *;
+@use 'styles/abstracts/functions' as *;
+
+$modal-overlay: rgba(0, 0, 0, 0.44);
+$modal-bg: #343434;
+// $modal-bg: #1e1f22;
+$modal-text: #f1f1f1;
+$modal-muted: #b6b7bb;
+$radius: 12px;
+$shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+
+.c-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $modal-overlay;
+  z-index: 800;
+
+  &--sm .c-modal__panel {
+    max-width: 420px;
+  }
+  &--md .c-modal__panel {
+    max-width: 640px;
+  }
+  &--lg .c-modal__panel {
+    max-width: 820px;
+  }
+}
+
+.c-modal__panel {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: $modal-bg;
+  color: $modal-text;
+  box-shadow: $shadow;
+  animation: modal-slide-up 0.22s ease-out;
+
+  @include respond-to('md') {
+    width: 92vw;
+    border-radius: $radius;
+    height: fit-content;
+  }
+}
+
+.c-modal__close {
+  position: absolute;
+  top: 24px;
+  right: 16px;
+  border: 0;
+  background: transparent;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1;
+  color: $modal-text;
+  cursor: pointer;
+  z-index: 700;
+
+  @include respond-to('md') {
+    top: 32px;
+    right: 24px;
+  }
+}
+
+.c-modal__body {
+  padding: rem(72px) rem(16px) rem(24px);
+  height: 100%;
+
+  @include respond-to('md') {
+    padding: rem(32px) rem(24px);
+  }
+}
+
+@keyframes modal-slide-up {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

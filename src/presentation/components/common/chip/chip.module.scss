@@ -1,0 +1,58 @@
+@use 'styles/abstracts/functions' as *;
+
+.chip {
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 12px;
+  padding: rem(16px);
+  background: #F7F7F70D;
+  color: color(text, primary);  
+  border-radius: 16px;
+  border: 0;
+  outline: 0;
+  user-select: none;
+  white-space: nowrap;
+
+  &:is(button) {
+    cursor: pointer;
+    transition: transform .06s ease, background .15s ease, box-shadow .15s ease;
+    &:hover { transform: translateY(-1px); }
+    &:active { transform: translateY(0); }
+  }
+}
+
+.chip__icon {
+  display: grid;
+  place-items: center;
+  width: 32px; height: 32px;
+  color: color(pallete, primary);
+}
+
+.chip__label {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: color(text, primary);
+}
+
+.chip--sm {
+  padding: 10px 14px;
+  .chip__icon { width: rem(20px); height: rem(20px); }
+  .chip__label { font-size: 14px; font-weight: 600; }
+}
+.chip--md {
+  .chip__label { font-size: rem(20px) }
+}
+
+.chip--lg   { border-radius: rem(18px) }
+.chip--full { border-radius: rem(999px) }
+
+.chip--muted .chip__label {
+  color: rgba(255,255,255,0.55);
+}
+
+.chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}

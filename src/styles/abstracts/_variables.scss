@@ -1,0 +1,90 @@
+@use 'sass:math';
+
+$colors: (
+  pallete: (
+    primary: #dae200,
+    secondary: #6c757d,
+    tertiary: hsla(267, 100%, 50%, 0.502)
+  ),
+  background: (
+    primary: #0a061b,
+    secondary: #f8f9fa,
+    tertiary: #161225
+  ),
+  text: (
+    primary: #fafafa,
+    secondary: #979797,
+    inverted: #1a1a1a
+  ),
+  border: (
+    default: #dee2e6,
+    dark: #adb5bd,
+    light: #e9ecef
+  ),
+  neutrals: (
+    white: #ffffff,
+    black: #000000,
+    05: #272437,
+    001: #f7f7f708,
+    002: #28272c,
+    003: #211e31,
+    004: #bfbfbf,
+    gray-003: #f7f7f71a,
+    gray-100: #f8f9fa,
+    gray-200: #e9ecef,
+    gray-300: #dee2e6,
+    gray-400: #ced4da,
+    gray-500: #adb5bd,
+    gray-550: #8aa8b5,
+    gray-600: #6c757d,
+    gray-625: #3e3e3e,
+    gray-650: #343434,
+    gray-700: #495057,
+    gray-800: #343a40,
+    gray-900: #212529,
+    blue-300: #252a40,
+    blue-400: #1e2237,
+    blue-900: #0013e2,
+    brown-100: #8c4500
+  ),
+  accent: (
+    primary: #007bff,
+    success: #3de05b,
+    danger: #f57979,
+    warning: #ffc107,
+    info: #17a2b8
+  )
+);
+
+// Palette
+$primary-color: #00ff37;
+$secondary-color: #6c757d;
+$success-color: #3de05b;
+$danger-color: #f57979;
+$warning-color: #ffc107;
+$info-color: #17a2b8;
+$light-color: #f8f9fa;
+$dark-color: #343a40;
+
+// Grayscale
+$white: #ffffff;
+$black: #000000;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+// background
+$background-primary: #0f0f0f;
+
+// Spacing
+$spacing-unit: 1rem;
+$spacing-sm: math.div($spacing-unit, 2);
+$spacing-md: $spacing-unit;
+$spacing-lg: math.div($spacing-unit * 3, 2);
+$spacing-xl: $spacing-unit * 2;

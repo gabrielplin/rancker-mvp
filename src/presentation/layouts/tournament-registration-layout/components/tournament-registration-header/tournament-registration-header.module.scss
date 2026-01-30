@@ -1,0 +1,33 @@
+@use "styles/abstracts/functions" as *;
+
+.tournament-registration-header {
+  width: 100%;
+  height: rem(100px);
+  background: color(background, tertiary);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: rem(1065px);
+    
+    &__icon-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      background: none;
+      outline: none;
+      border: none;
+      
+      width: rem(40px);
+      height: rem(40px);
+      cursor: pointer;
+    }
+  }
+}

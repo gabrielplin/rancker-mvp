@@ -1,0 +1,54 @@
+.sidebar {
+  background: #F7F7F70D;
+  width: 64px;
+  transition: width 0.3s ease;
+  height: 100vh;
+  padding: 1rem 0;
+
+  &.open {
+    width: 330px;
+  }
+
+  .toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    padding: 1rem;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 20px;
+    color: #ffffff;
+    text-decoration: none;
+    
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      min-width: 32px;
+      min-height: 32px;
+    }
+
+    span {
+      white-space: nowrap;
+    }
+    
+    &:hover {
+      background-color: #F7F7F71A;
+    }
+  }
+}

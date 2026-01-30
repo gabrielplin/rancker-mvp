@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TeamStatus {
+  pending
+  paid
+  cancelled
+}
+
+enum UniformSize {
+  PP
+  P
+  M
+  G
+  XG
+}
+
+enum CategoryStatus {
+  available
+  last_spots
+  sold_out
+  in_progress
+}
+
+model Tournament {
+  id                String   @id @default(uuid())
+  name              String
+  slug              String   @unique
+  description       String?
+
+  startDate         DateTime
+  endDate           DateTime
+  registrationEndAt DateTime
+
+  bannerImage       String?
+  primaryColor      String?
+  secondaryColor    String?
+
+  // Endereço
+  addressName       String? // Ex: Arena Beach Sports
+  addressStreet     String?
+  addressCity       String?
+  addressState      String?
+  addressZip        String?
+  latitude          Float?
+  longitude         Float?
+
+  categories        Category[]
+  teams             Team[]
+
+  createdAt         DateTime @default(now())
+}
+
+model Category {
+  id              String         @id @default(uuid())
+  name            String
+  price           Float
+
+  maxInstallments Int            @default(1)
+  maxTeams        Int
+  status          CategoryStatus @default(available)
+
+  prizes          Json?
+
+  tournamentId    String
+  tournament      Tournament @relation(fields: [tournamentId], references: [id])
+
+  teams           Team[]
+
+  createdAt       DateTime @default(now())
+}
+
+model Athlete {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  instagram   String
+  phone       String
+  uniformSize String?
+
+  teams TeamAthlete[]
+}
+
+model Team {
+  id              String   @id @default(uuid())
+  tournamentId    String
+  categoryId      String
+  stripeSessionId String 
+@@index([stripeSessionId])
+  status          TeamStatus
+  createdAt       DateTime @default(now())
+
+  tournament Tournament @relation(fields: [tournamentId], references: [id])
+  category   Category   @relation(fields: [categoryId], references: [id])
+
+  athletes TeamAthlete[]
+}
+
+model TeamAthlete {
+  id        String   @id @default(uuid())
+  teamId    String
+  athleteId String
+
+  team    Team    @relation(fields: [teamId], references: [id])
+  athlete Athlete @relation(fields: [athleteId], references: [id])
+
+  @@unique([teamId, athleteId])
+}

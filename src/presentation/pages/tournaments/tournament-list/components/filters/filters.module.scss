@@ -1,0 +1,23 @@
+@use 'styles/abstracts/functions'as *;
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: rem(16px);
+  width: 100%;
+  align-items:end;
+}
+
+.filter__button {
+  display: flex;
+  align-items: center;
+  border-radius: 99px;
+  background-color: #7F7F7F1A;
+  border: none;
+  width: rem(136px);
+  height: rem(48px);
+  color: color(neutrals,white);
+  gap: rem(8px);
+  justify-content: center;
+  cursor: pointer;
+}

@@ -1,0 +1,59 @@
+@use 'styles/abstracts/functions'as *;
+
+.search-input {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+  width: 100%;
+
+  &__label {
+    font-size: rem(16px);
+    font-weight: 500;
+    color: color(text, primary);
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 99px;
+    background-color: #7F7F7F1A;
+    gap: rem(16px);
+  }
+
+  &__input {
+    width: 100%;
+    border: none;
+    font-size: 1rem;
+    padding: 0;
+    height: 100%;
+    color: color(text, primary);
+    outline: none;
+    background-color: transparent;
+    border-radius: 0;
+
+    &:focus {
+      border-color: color(neutrals, white);
+    }
+
+    &::placeholder {
+      color: color(neutrals, 004);
+      font-weight: 400;
+    }
+  }
+
+  &--error &__input {
+    border: 1px solid color(accent, danger);
+    color: color(accent, danger);
+  }
+
+  &--error &__eye {
+    fill: color(accent, danger);
+  }
+
+  &__error {
+    color: color(accent, danger);
+    font-size: 0.875rem;
+  }
+}

@@ -1,0 +1,119 @@
+@use 'styles/abstracts/functions' as *;
+
+.service-card {
+  position: relative;
+
+  &__input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+
+    &:focus-visible + .service-card__surface {
+      outline: 2px solid color(neutrals, white);
+      outline-offset: 3px;
+    }
+
+    &:checked + .service-card__surface .service-card__box {
+      background: color(pallete, primary);
+      border-color: transparent;
+    }
+    &:checked + .service-card__surface .service-card__check {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  &__surface {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: rem(12px);
+    background: #2c2b30;
+    border-radius: rem(16px);
+    padding: rem(20px);
+    min-height: rem(262px);
+    transition: background-color .15s ease, border-color .15s ease, transform .12s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+
+    &:hover {
+      background: #333238;
+      border-color: #3a3940;
+      transform: translateY(-1px);
+    }
+  }
+
+  &__box {
+    inline-size: rem(24px);
+    block-size: rem(24px);
+    border-radius: rem(6px);
+    border: rem(2px) solid color(neutrals, 004);
+    background: transparent;
+    display: grid;
+    place-items: center;
+    color: #101010;
+    transition: background-color .15s ease, border-color .15s ease;
+  }
+  &__check {
+    opacity: 0;
+    transform: scale(.85);
+    transition: opacity .15s ease, transform .15s ease;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: rem(6px);
+  }
+
+  &__title {
+    font-size: rem(18px);
+    color: color(neutrals, white);
+  }
+
+  &__desc {
+    font-size: rem(14px);
+    color: color(neutrals, 004);
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: pre-line;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__details {
+    width: 100%;
+    height: rem(48px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: rem(8px);
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: rem(14px);
+    color: color(pallete, primary);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__chevron {
+    width: rem(14px);
+    height: rem(14px);
+  }
+}

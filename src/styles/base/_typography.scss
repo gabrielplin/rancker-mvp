@@ -1,0 +1,22 @@
+@use 'styles/abstracts/variables' as *;
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  margin-bottom: $spacing-sm;
+  line-height: 1.2;
+}
+
+p {
+  margin-bottom: $spacing-md;
+  line-height: 1.6;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+    text-decoration: underline;
+  }
+}

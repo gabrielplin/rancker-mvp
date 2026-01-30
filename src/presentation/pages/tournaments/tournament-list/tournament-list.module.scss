@@ -1,0 +1,13 @@
+@use '../../../../styles/abstracts/functions' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24px);
+
+  width: 100%;
+  max-width: rem(1065px);
+  margin: 0 auto;
+
+  padding-bottom: rem(140px);
+}

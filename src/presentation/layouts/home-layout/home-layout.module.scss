@@ -1,0 +1,17 @@
+@use 'styles/abstracts/breakpoints' as *;
+@use 'styles/abstracts/functions' as *;
+
+.home-layout {
+  &__main {
+    width: 100%;
+
+    &__toolbar {
+      height: 80px;
+
+      @include respond-to('md') {
+        height: 120px;
+        gap: rem(16px);
+      }
+    }
+  }
+}

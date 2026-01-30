@@ -1,0 +1,46 @@
+@use 'styles/abstracts/breakpoints' as *;
+@use 'styles/abstracts/functions' as *;
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: rem(4px);
+  list-style: none;
+
+  &__item {
+    height: 40px;
+    @include respond-to('md') {
+      height: auto;
+
+      &--active {
+        .navbar__link {
+          background: color(pallete, tertiary);
+          color: color(neutrals, white);
+        }
+      }
+    }
+  }
+
+  &__link {
+    // height: 100%;
+    text-decoration: none;
+    color: color(neutrals, white);
+    font-weight: 500;
+    transition: background 0.3s ease;
+
+    @include respond-to('md') {
+      &:hover {
+        background: color(pallete, tertiary);
+      }
+      padding: rem(16px) rem(24px);
+      border-radius: rem(999px);
+    }
+  }
+
+  @include respond-to('md') {
+    border-radius: rem(50px);
+    padding: rem(24px);
+    background-color: color(neutrals, gray-003);
+  }
+}

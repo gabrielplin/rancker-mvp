@@ -1,0 +1,41 @@
+@use 'styles/abstracts/functions'as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24px);
+}
+
+.category {
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: rem(16px);
+    height: fit-content;
+  }
+
+  &__button {
+    display: inline-block;
+    cursor: pointer;
+    border: 0;
+    border-radius: 3em;
+    font-weight: 600;
+    line-height: 1;
+    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    padding: 11px 20px;
+    font-size: 14px;
+    background-color: color(neutrals, gray-003);
+    color: color(text, primary);
+
+    &--selected {
+      background-color: color(pallete, primary);
+      color: color(text, inverted);
+    }
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap:rem(8px)
+}

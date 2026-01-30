@@ -1,0 +1,164 @@
+@use 'styles/abstracts/functions' as *;
+@use 'styles/abstracts/breakpoints' as *;
+
+.team {
+  max-width: 600px !important;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @include respond-to('md') {
+    align-items: center;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: rem(24px);
+    line-height: 130%;
+    text-align: center;
+    color: color(text, primary);
+    margin-bottom: rem(8px);
+
+    @include respond-to('md') {
+      font-size: rem(40px);
+    }
+  }
+
+  &__subtitle {
+    font-weight: 400;
+    font-size: rem(18px);
+    line-height: 130%;
+    text-align: center;
+    color: color(text, secondary);
+    margin-bottom: rem(32px);
+
+    @include respond-to('md') {
+      font-size: rem(24px);
+    }
+  }
+
+  &__head {
+    width: 100%;
+    border-radius: rem(16px);
+    padding: rem(16px) rem(24px);
+    background-color: color(neutrals, 003);
+    display: flex;
+    gap: rem(16px);
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: rem(24px);
+
+    & > img {
+      width: 72px;
+      height: 60px;
+      border-radius: 16px;
+
+      @include respond-to('md') {
+        width: 120px;
+        height: 100px;
+      }
+    }
+  }
+  &__tournamentName {
+    font-weight: 600;
+    font-size: rem(16px);
+    line-height: 130%;
+    color: color(text, primary);
+    margin-bottom: rem(8px);
+
+    @include respond-to('md') {
+      font-size: rem(24px);
+    }
+  }
+  &__tournamentDuo {
+    margin-right: rem(24px);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: -15px;
+      height: 3px;
+      width: 3px;
+      border-radius: 50%;
+      background: color(neutrals, 004);
+    }
+
+    @include respond-to('md') {
+      margin-right: rem(30px);
+      &::after {
+        right: -18px;
+      }
+    }
+  }
+
+  &__tournamentDuo,
+  &__tournamentCategory {
+    font-weight: 400;
+    font-size: rem(16px);
+    line-height: 130%;
+    color: color(neutrals, 004);
+
+    @include respond-to('md') {
+      font-size: rem(18px);
+    }
+  }
+
+  &__athleteForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: rem(8px);
+    list-style: none;
+    margin: rem(24px) 0 rem(32px);
+
+    & > button {
+      width: 100%;
+      margin-top: rem(24px);
+    }
+  }
+
+  &__athleteItem {
+    width: 100%;
+    padding: rem(16px) rem(24px);
+    border-radius: rem(16px);
+    background: color(neutrals, 002);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: rem(24px);
+  }
+
+  &__athleteInfo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: rem(16px);
+  }
+
+  &__athleteProfile {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+
+  &__athleteName {
+    font-weight: 600;
+    font-size: rem(16px);
+    line-height: 130%;
+    color: color(text, primary);
+
+    @include respond-to('md') {
+      font-size: rem(20px);
+    }
+  }
+  &__athleteId {
+    font-weight: 400;
+    font-size: rem(16px);
+    line-height: 130%;
+    color: color(neutrals, 004);
+  }
+}

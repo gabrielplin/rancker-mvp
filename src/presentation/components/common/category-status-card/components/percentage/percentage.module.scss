@@ -1,0 +1,27 @@
+@use 'styles/abstracts/functions' as *;
+
+.percentage {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: rem(8px);
+  }
+
+  &__title {
+    font-size: rem(16px);
+    line-height: 130%;
+  }
+}
+
+.bar {
+  width: 100%;
+  height: rem(4px);
+  border-radius: rem(999px);
+  background-color: #FAFAFA;
+
+  & .indicator {
+    height: 100%;
+    background-color: #3DE05B;
+    border-radius: rem(999px);
+  }
+}

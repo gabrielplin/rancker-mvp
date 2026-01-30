@@ -1,0 +1,457 @@
+@use 'styles/abstracts/functions' as *;
+@use 'styles/abstracts/breakpoints' as *;
+
+.heroTournament {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(32px);
+  flex-direction: column-reverse;
+  position: relative;
+  margin-top: rem(48px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0px;
+    left: -400px;
+    right: 40%;
+    background: color(pallete, tertiary);
+    z-index: -1;
+    border-radius: 100%;
+    filter: blur(100px);
+    opacity: 0.6;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 60%;
+    bottom: -100px;
+    left: 60%;
+    right: -200px;
+    background: color(neutrals, blue-900);
+    z-index: -1;
+    border-radius: 100%;
+    filter: blur(200px);
+    opacity: 0.4;
+  }
+
+  @include respond-to('md') {
+    margin-top: 0;
+    gap: rem(100px);
+    flex-direction: row;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: 600;
+  font-size: rem(28px);
+  line-height: 130%;
+  color: color(text, primary);
+  margin-bottom: rem(8px);
+
+  @include respond-to('md') {
+    font-size: rem(48px);
+  }
+}
+
+.subtitle {
+  font-weight: 400;
+  font-size: rem(16px);
+  line-height: 130%;
+  color: color(text, primary);
+  margin-bottom: rem(32px);
+
+  @include respond-to('md') {
+    font-size: rem(20px);
+  }
+}
+
+.contentDate,
+.contentLocation {
+  width: 100%;
+  max-width: 473px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: rem(16px);
+  margin-bottom: rem(32px);
+
+  svg path {
+    fill: color(pallete, primary);
+  }
+
+  & > div {
+    flex: 1;
+    & > p {
+      font-weight: 500;
+      font-size: rem(16px);
+      line-height: 130%;
+      color: color(text, primary);
+      margin-bottom: rem(8px);
+
+      @include respond-to('md') {
+        font-size: rem(18px);
+      }
+    }
+
+    & > span {
+      font-weight: 400;
+      font-size: rem(16px);
+      line-height: 130%;
+      color: color(text, secondary);
+
+      @include respond-to('md') {
+        font-size: rem(18px);
+      }
+    }
+  }
+}
+
+.bannerHero {
+  width: 100vw;
+  max-width: 550px;
+  border-radius: 16px;
+
+  @include respond-to('md') {
+    width: 100vw;
+  }
+}
+
+.categorySelection {
+  padding: rem(24px) 0;
+
+  & > h3 {
+    font-weight: 400;
+    font-size: rem(24px);
+    line-height: 130%;
+    color: color(text, primary);
+    margin-bottom: rem(32px);
+  }
+
+  @include respond-to('md') {
+    padding: rem(64px) 0;
+
+    & > h3 {
+      font-size: rem(32px);
+    }
+  }
+}
+
+.selectionContainer {
+  display: flex;
+  gap: rem(32px);
+}
+
+.selectionList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+}
+
+.selectionActions {
+  height: 100vh;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+
+  min-width: 350px;
+  padding: rem(32px) rem(24px);
+  background: color(neutrals, 002);
+
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+
+  &.openModal {
+    transform: translateY(0);
+  }
+
+  @include respond-to('md') {
+    width: 30%;
+    height: fit-content;
+    border-radius: rem(16px);
+    position: unset;
+    transform: unset;
+    z-index: auto;
+
+    & > button {
+      width: 100%;
+      position: relative !important;
+      bottom: unset !important;
+      left: unset !important;
+      right: unset !important;
+    }
+  }
+
+  & > h4 {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 130%;
+    color: color(text, primary);
+    margin-bottom: rem(24px);
+  }
+
+  .orderSummary {
+    display: flex;
+    flex-direction: column;
+    gap: rem(24px);
+    list-style: none;
+    margin-bottom: rem(48px);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: rem(-24px);
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: color(text, primary);
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      span {
+        font-weight: 400;
+        font-size: rem(18px);
+        line-height: 130%;
+        color: color(neutrals, 004);
+      }
+    }
+  }
+
+  .totalAmount {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: rem(32px);
+
+    span {
+      font-weight: 600;
+      font-size: rem(18px);
+      line-height: 130%;
+      color: color(text, primary);
+    }
+  }
+
+  & > button {
+    //
+    position: absolute;
+    bottom: rem(24px);
+    left: rem(16px);
+    right: rem(16px);
+  }
+}
+
+.summaryFloat {
+  width: 100vw;
+  display: block;
+  height: fit-content;
+  padding: rem(24px) rem(16px);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: color(background, primary);
+  z-index: 800;
+
+  & > h2 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 130%;
+    color: color(text, primary);
+    margin-bottom: rem(24px);
+  }
+
+  & > button {
+    width: 100%;
+  }
+
+  .contentFloatTotal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-weight: 700;
+      font-size: rem(20px);
+      line-height: 130%;
+      color: color(text, primary);
+      margin-bottom: rem(8px);
+    }
+  }
+
+  p.contentFloatInstallments {
+    font-weight: 400;
+    font-size: rem(16px);
+    line-height: 130%;
+    color: color(neutrals, 004);
+    margin-bottom: rem(8px);
+  }
+
+  span.contentFloatToggleDetails {
+    display: block;
+    font-weight: 700;
+    font-size: rem(16px);
+    line-height: 130%;
+    color: color(pallete, primary);
+    cursor: pointer;
+    margin-bottom: rem(24px);
+  }
+
+  @include respond-to('md') {
+    display: none;
+  }
+}
+
+.contentInfo {
+  width: 100%;
+  padding: rem(24px);
+  background-color: color(neutrals, 002);
+  border-radius: rem(16px);
+  margin: rem(16px) 0;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: rem(32px);
+    gap: rem(8px);
+
+    & > svg {
+      width: 25px;
+      height: 25px;
+
+      path {
+        fill: color(text, primary);
+      }
+    }
+  }
+
+  & > h2,
+  & > div h2 {
+    font-weight: 600;
+    font-size: rem(24px);
+    line-height: 130%;
+    color: color(text, primary);
+  }
+
+  & > h3 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 130%;
+    color: color(text, primary);
+    margin-bottom: rem(8px);
+  }
+
+  p {
+    font-weight: 400;
+    font-size: rem(16px);
+    line-height: 130%;
+    color: color(neutrals, 004);
+  }
+
+  span {
+    display: block;
+    font-weight: 600;
+    font-size: rem(20px);
+    line-height: 130%;
+    color: color(pallete, primary);
+    margin-top: rem(32px);
+    cursor: pointer;
+  }
+}
+
+.rewardContent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .rewardTitle {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 130%;
+    color: color(text, primary);
+    margin-bottom: rem(32px);
+  }
+
+  .rewardsList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: rem(8px);
+
+    .rewardItem {
+      width: 100%;
+      height: 64px;
+      border-radius: rem(16px);
+      background-color: color(neutrals, gray-625);
+      padding: rem(16px) rem(24px);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: rem(16px);
+
+      .rewardInfo {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+          font-weight: 600;
+          font-size: rem(16px);
+          line-height: 130%;
+          color: color(text, primary);
+
+          @include respond-to('md') {
+            font-size: rem(20px);
+          }
+        }
+
+        p {
+          font-weight: 500;
+          font-size: rem(16px);
+          line-height: 130%;
+          color: color(neutrals, 004);
+
+          @include respond-to('md') {
+            font-size: rem(20px);
+          }
+        }
+
+        @include respond-to('md') {
+          flex-direction: column;
+          gap: rem(8px);
+          align-items: flex-start;
+        }
+      }
+
+      @include respond-to('md') {
+        height: 92px;
+        align-items: flex-start;
+      }
+    }
+  }
+
+  & > button {
+    width: 100%;
+    position: absolute;
+    bottom: 24px;
+  }
+}

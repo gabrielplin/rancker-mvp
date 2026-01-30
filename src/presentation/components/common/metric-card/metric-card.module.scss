@@ -1,0 +1,53 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  width: 100%;
+  height: 250px;
+  
+  padding: 1.5rem;
+  border-radius: 1rem;
+  
+  &.green {
+    background-color: #3DE05B66;
+    
+    & .iconBox {
+      background-color: #3DE05B;
+    }
+  }
+  
+  &.yellow {
+    background-color: #F0F90099;
+    
+    & .iconBox {
+      background-color: #DAE200;
+    }
+  }
+  
+  &.purple {
+    background-color: #7100FF66;
+    
+    & .iconBox {
+      background-color: #7100FF;
+    }
+  }
+}
+
+.iconBox {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 130%;
+}
+
+.value {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 130%;
+}

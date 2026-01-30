@@ -1,0 +1,118 @@
+:root {
+  --radius-lg: 14px;
+
+  /* cores base (dark) */
+  --alert-bg-error: #3a1418;
+  --alert-bg-warning: #3b2d0f;
+  --alert-bg-success: #1f2b24;
+  --alert-bg-info: #232a46;
+  --alert-bg-neutral: #2a2b33;
+
+  --alert-fg-default: #e6e6e6;
+  --alert-fg-muted: #c8c8c8;
+
+  --alert-accent-error: #ff5a6b;
+  --alert-accent-warning: #ffcf5a;
+  --alert-accent-success: #5ad19a;
+  --alert-accent-info: #7aa8ff;
+  --alert-accent-neutral: #bfc4d6;
+}
+
+.alert {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  align-items: start;
+  width: 100%;
+  padding: 18px 22px;
+  border-radius: var(--radius-lg);
+  color: var(--alert-fg-default);
+  box-shadow: 0 2px 0 rgba(0,0,0,.2) inset, 0 1px 18px rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.06);
+  background: var(--alert-bg-neutral);
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.06);
+
+    svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+    }
+  }
+
+  &__content {
+    display: grid;
+    gap: 6px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: .2px;
+  }
+
+  &__description {
+    margin: 0;
+    color: var(--alert-fg-muted);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  &--has-description {
+    padding-block: 20px;
+  }
+
+  &--error {
+    background: var(--alert-bg-error);
+
+    .alert__icon {
+      color: var(--alert-accent-error);
+      background: rgba(255, 90, 107, 0.12);
+    }
+  }
+
+  &--warning {
+    background: var(--alert-bg-warning);
+
+    .alert__icon {
+      color: var(--alert-accent-warning);
+      background: rgba(255, 207, 90, 0.12);
+    }
+  }
+
+  &--success {
+    background: var(--alert-bg-success);
+
+    .alert__icon {
+      color: var(--alert-accent-success);
+      background: rgba(90, 209, 154, 0.12);
+    }
+  }
+
+  &--info {
+    background: var(--alert-bg-info);
+
+    .alert__icon {
+      color: var(--alert-accent-info);
+      background: rgba(122, 168, 255, 0.12);
+    }
+  }
+
+  &--neutral {
+    background: var(--alert-bg-neutral);
+
+    .alert__icon {
+      color: var(--alert-accent-neutral);
+      background: rgba(191, 196, 214, 0.12);
+    }
+  }
+}

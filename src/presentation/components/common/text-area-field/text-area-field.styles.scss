@@ -1,0 +1,44 @@
+@use 'styles/abstracts/functions' as *;
+
+.text-area {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+
+  &__label {
+    font-size: rem(16px);
+    font-weight: 500;
+    color: color(text, primary);
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #28272c;
+    font-size: 1rem;
+    min-height: rem(100px);
+    max-height: rem(100px);
+    resize: none;
+    color: color(text, primary);
+    background-color: #28272c;
+    outline: none;
+    &:focus {
+      border-color: color(neutrals, white);
+    }
+    &::placeholder {
+      color: color(neutrals, 004);
+      font-weight: 400;
+    }
+  }
+
+  &--error &__input {
+    border: 1px solid color(accent, danger);
+    color: color(accent, danger);
+  }
+
+  &__error {
+    color: color(accent, danger);
+    font-size: 0.875rem;
+  }
+}

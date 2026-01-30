@@ -1,0 +1,45 @@
+@use 'styles/abstracts/breakpoints' as *;
+@use 'styles/abstracts/functions' as *;
+
+.breadcrumbs {
+  width: 100%;
+  max-width: 1312px;
+  margin: 0 auto;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  padding: 0 rem(16px);
+
+  &__item {
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-size: rem(16px);
+    line-height: 130%;
+    letter-spacing: 0%;
+
+    &--link {
+      color: color(text, secondary);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &--current {
+      color: color(text, primary);
+      font-weight: 500;
+    }
+
+    & + &::before {
+      content: '>';
+      margin: 0 0.5rem;
+      color: #6b7280;
+    }
+  }
+
+  @include respond-to('md') {
+    padding: 0;
+  }
+}

@@ -1,0 +1,68 @@
+@use 'styles/abstracts/functions' as *;
+
+$bg-hover: #2e2e37;
+
+.select-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: rem(16px);
+  
+  height: rem(159px);
+  padding: rem(28px);
+  border-radius: rem(16px);
+  background: color(neutrals, 002);
+  border: 2px solid transparent;
+  color: color(text, primary);
+  cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+
+  &:hover { background: $bg-hover; }
+
+  &:has(input:focus-visible) {
+    box-shadow: 0 0 0 3px rgba(color(pallete, primary), .35);
+  }
+
+  &--checked {
+    border-color: color(pallete, primary);
+  }
+
+  &--disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+
+  &__input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__icon {
+    font-size: rem(28px);
+    line-height: 1;
+    color: color(pallete, primary);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: rem(6px);
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: rem(20px);
+    font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &__subtitle {
+    font-size: rem(14px);
+    color: color(text, secondary);
+  }
+}

@@ -1,0 +1,15 @@
+@use 'styles/abstracts/breakpoints' as *;
+@use 'styles/abstracts/functions' as *;
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  @include respond-to('md') {
+    display: none;
+  }
+}

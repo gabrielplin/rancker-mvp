@@ -1,0 +1,44 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__headers {
+    display: flex;
+    border-bottom: 2px solid #BFBFBF;
+  }
+
+  &__tab {
+    padding: 1.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #BFBFBF;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &--active {
+      color: #DAE200;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        height: 2px;
+        width: 100%;
+        background-color: #DAE200;
+      }
+    }
+
+    &:not(&--active):hover {
+      color: #ffffff;
+    }
+  }
+
+  &__content {
+    margin-top: 1rem;
+  }
+}

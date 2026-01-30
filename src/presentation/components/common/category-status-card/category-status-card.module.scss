@@ -1,0 +1,74 @@
+@use '../../../../styles/abstracts/functions' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24px);
+
+  width: 100%;
+  height: rem(237px);
+
+  padding: 1.5rem;
+  border-radius: 1rem;
+
+  background-color: #7f7f7f1a;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: rem(16px);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+
+  & p {
+    font-size: rem(16px);
+    line-height: 130%;
+    color: #bfbfbf;
+  }
+}
+
+.title {
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 130%;
+}
+
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button__details {
+  display: block;
+
+  background-color: #dae200;
+  border: none;
+  border-radius: rem(999px);
+  padding: rem(3px) rem(16px);
+
+  font-size: rem(20px);
+  font-weight: 600;
+  line-height: 130%;
+
+  cursor: pointer;
+}
+
+.button__copy {
+  display: flex;
+
+  border: none;
+  background-color: transparent;
+
+  font-size: rem(16px);
+  font-weight: 600;
+  line-height: 130%;
+  color: #fafafa;
+
+  cursor: pointer;
+}

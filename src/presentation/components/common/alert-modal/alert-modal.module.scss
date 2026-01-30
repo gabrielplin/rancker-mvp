@@ -1,0 +1,121 @@
+@use 'styles/abstracts/functions' as *;
+
+
+$gray-900: #1f2937;
+$gray-700: #374151;
+$gray-600: #4b5563;
+$gray-200: #e5e7eb;
+
+$danger: #ef4444;
+$warning: #f59e0b;
+$info: #3b82f6;
+$success: #10b981;
+
+.cModal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(2px);
+  }
+
+  &__dialog {
+    position: relative;
+    width: 580px;
+    height: 520px;
+    background: #343434;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.25);
+    padding: rem(32px) 24px;
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    gap: 8px 14px;
+    color: $gray-900;
+
+    &--danger  { border-top: 6px solid $danger; }
+    &--warning { border-top: 6px solid $warning; }
+    &--info    { border-top: 6px solid $info; }
+    &--success { border-top: 6px solid $success; }
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  &__icon {
+    width: 180px; height: 180px;
+    overflow: hidden;
+  }
+
+  &__title {
+    text-align: center;
+    color: color(text, primary);
+    font-size: 40px;
+    line-height: 1.2;
+    margin: rem(24px) 0 6px rem(8px);
+    font-weight: 700;
+  }
+
+  &__body {
+    text-align: center;
+    color: color(neutrals, 004);
+    font-size: 20px;
+  }
+
+  &__actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 12px;
+  }
+
+  &__btn {
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    padding: 10px 16px;
+    width: 250px;
+    min-height: 58px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 20px;
+
+    &--ghost {
+      background: $gray-200;
+      color: $gray-700;
+    }
+
+    &--confirm {
+      background: $danger;
+      color: color(neutrals, white);
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 8px; right: 10px;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: transparent;
+    border: 0;
+    font-size: 22px;
+    color: $gray-600;
+    cursor: pointer;
+    &:hover { background: rgba(0,0,0,.04); }
+  }
+}
+
+.cModal__dialog--warning .cModal__btn--confirm { background: $warning; }
+.cModal__dialog--info    .cModal__btn--confirm { background: $info; }
+.cModal__dialog--success .cModal__btn--confirm { background: $success; }

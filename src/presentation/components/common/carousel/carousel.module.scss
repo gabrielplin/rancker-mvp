@@ -1,0 +1,99 @@
+$btnBg: #2b2837;
+$btnFg: #ffffff;
+
+.carousel {
+  --gap: 24px;
+  --per-view-desktop: 3;
+  --per-view-tablet: 2;
+  --per-view-mobile: 1;
+  --snap-align: start;
+
+  position: relative;
+
+  &--center {
+    --snap-align: center;
+  }
+
+  /* controla se o usuário pode rolar manualmente */
+  &--no-scroll .carousel__viewport {
+    overflow-x: hidden;
+    touch-action: pan-y; /* evita gesto horizontal */
+    overscroll-behavior-x: contain;
+  }
+  &--scroll .carousel__viewport {
+    overflow-x: auto;
+    touch-action: pan-x pan-y;
+    overscroll-behavior-x: contain;
+  }
+
+  .carousel__viewport {
+    /* scroll-snap só faz sentido quando allowScroll=true */
+    scroll-snap-type: x var(--snap-type, mandatory);
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+
+  .carousel__track {
+    display: flex;
+    gap: var(--gap);
+    padding-inline-end: var(
+      --edge-pad,
+      0px
+    ); /* reservado p/ edgeLock se quiser estilizar */
+  }
+
+  .carousel__slide {
+    scroll-snap-align: var(--snap-align);
+    flex: 0 0 calc((100% - var(--gap) * (var(--pv) - 1)) / var(--pv));
+  }
+
+  /* desktop default */
+  & {
+    --pv: var(--per-view-desktop);
+  }
+  @media (max-width: 1080px) {
+    & {
+      --pv: var(--per-view-tablet);
+    }
+  }
+  @media (max-width: 720px) {
+    & {
+      --pv: var(--per-view-mobile);
+    }
+  }
+
+  .carousel__controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .carousel__btn {
+    appearance: none;
+    border: none;
+    border-radius: 999px;
+    width: 36px;
+    height: 36px;
+    background: $btnBg;
+    color: $btnFg;
+    cursor: pointer;
+    transition:
+      transform 0.12s ease,
+      opacity 0.12s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  .carousel__counter {
+    margin-left: auto;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.9rem;
+  }
+}

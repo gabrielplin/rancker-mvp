@@ -1,0 +1,26 @@
+@use 'styles/abstracts/variables' as *;
+@use 'styles/abstracts/functions' as *;
+
+.divider-container {
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  
+  > div {
+    background-color: color(text, primary);
+  }
+}
+
+.divider-horizontal {
+  flex-direction: row;
+  
+  > div {
+    height: rem(1px);
+    flex: 1;
+  }
+}
+
+.divider-text {
+  font-weight: 600;
+  font-size: rem(16px);
+}

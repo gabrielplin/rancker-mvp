@@ -1,0 +1,15 @@
+{
+  "low": false,
+  "moderate": true,
+  "high": true,
+  "critical": true,
+  "report-type": "summary",
+  "allowlist": [
+    "GHSA-4342-x723-ch2f",
+    "GHSA-67rr-84xm-4c7r",
+    "GHSA-f82v-jwr5-mffw",
+    "GHSA-g5qg-72qw-gw5v",
+    "GHSA-xv57-4mr9-wg8v"
+  ],
+  "registry": "https://registry.npmjs.org/"
+}

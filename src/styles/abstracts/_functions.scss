@@ -1,0 +1,15 @@
+@use 'sass:map';
+@use 'sass:math';
+@use './variables' as *;
+
+@function color($category, $type) {
+  @if map.has-key($colors, $category) and map.has-key(map.get($colors, $category), $type) {
+    @return map.get(map.get($colors, $category), $type);
+  } @else {
+    @error "Color '#{$category}.#{$type}' not found in the color map.";
+  }
+}
+
+@function rem($pixels, $base: 16px) {
+  @return #{math.div($pixels, $base)}rem;
+}

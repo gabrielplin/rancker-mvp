@@ -1,0 +1,44 @@
+@use 'styles/abstracts/functions' as *;
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  
+  min-height: rem(65px);
+  
+  background: #F7F7F70D; 
+  border-radius: 16px;
+  padding: 16px 20px;
+}
+
+.field__title {
+  font-size: rem(16px);
+  line-height: 1;
+  color: color(text, primary);
+}
+
+.field__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: rem(8px);
+}
+
+.field__icon {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  color: color(pallete, primary);
+}
+
+.field__value {
+  font-size: 24px;
+  font-weight: 700;
+  color: color(text, secondary);
+}
+
+/* Modificadores opcionais */
+.field--sm .field__value { font-size: 16px; font-weight: 600; }
+.field--muted .field__value { color: rgba(255,255,255,0.55); }

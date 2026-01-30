@@ -1,0 +1,62 @@
+@use 'styles/abstracts/functions' as *;
+
+.storybook-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8px);
+  cursor: pointer;
+  border: 0;
+  border-radius: 3em;
+  font-weight: 600;
+  line-height: 1;
+  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  &__full {
+    width: 100%;
+  }
+
+  &:disabled {
+    opacity: 50%;
+    cursor: no-drop;
+  }
+}
+
+.storybook-button--primary {
+  background-color: color(pallete, primary);
+  color: color(text, inverted);
+}
+
+.storybook-button--secondary {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
+  background-color: transparent;
+  border: rem(1.5px) solid color(pallete, primary);
+  color: color(text, primary);
+}
+
+.storybook-button--primary-outline {
+  border: rem(1.5px) solid color(pallete, primary);
+  background-color: transparent;
+  color: color(text, 'primary');
+}
+
+.storybook-button--secondary-outline {
+  border: rem(1.5px) solid rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
+  color: #333;
+}
+
+.storybook-button--small {
+  padding: 10px 16px;
+  font-size: 12px;
+}
+
+.storybook-button--medium {
+  padding: 11px 20px;
+  font-size: 14px;
+}
+
+.storybook-button--large {
+  padding: 16px 24px;
+  font-size: 16px;
+}

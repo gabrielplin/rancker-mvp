@@ -1,0 +1,81 @@
+@use 'styles/abstracts/breakpoints' as *;
+@use 'styles/abstracts/functions' as *;
+
+.section {
+  width: 100%;
+  padding: rem(60px) rem(16px);
+  overflow: hidden; // ESSENCIAL p/ animação suave
+
+  @include respond-to('md') {
+    padding: rem(80px) rem(16px);
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(64px);
+
+  @include respond-to('md') {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.reverse {
+  @include respond-to('md') {
+    flex-direction: row-reverse;
+  }
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+
+  will-change: transform, opacity; // performance
+}
+
+.subtitle {
+  font-size: rem(16px);
+  font-weight: 600;
+  color: color(accent, warning);
+}
+
+.title {
+  font-size: rem(40px);
+  font-weight: 700;
+  color: color(text, primary);
+}
+
+.description {
+  font-size: rem(18px);
+  color: color(neutrals, 004);
+  line-height: 160%;
+}
+
+.cta {
+  margin-top: rem(24px);
+  align-self: flex-start;
+}
+
+.media {
+  will-change: transform, opacity;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: rem(24px);
+
+    @include respond-to('md') {
+      width: auto;
+      height: 600px;
+    }
+  }
+}

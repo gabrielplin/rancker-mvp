@@ -1,0 +1,155 @@
+@use 'styles/abstracts/functions' as *;
+@use 'styles/abstracts/breakpoints' as *;
+
+.card {
+  width: 100%;
+  min-height: 149px;
+  padding: rem(24px);
+  border-radius: rem(16px);
+  background: color(neutrals, 002);
+  display: flex;
+  justify-content: space-between;
+
+  .checkbox {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+
+    &:focus-visible + .box {
+      outline: 2px solid color(neutrals, white);
+      outline-offset: 3px;
+    }
+
+    &:checked + .box {
+      background: color(pallete, primary);
+      border-color: transparent;
+    }
+
+    &:checked + .box .check {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  .box {
+    inline-size: rem(30px);
+    block-size: rem(30px);
+    border-radius: rem(8px);
+    border: rem(2px) solid color(neutrals, 004);
+    background: transparent;
+    display: grid;
+    place-items: center;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      transform 0.15s ease;
+    color: #111;
+    flex: 0 0 auto;
+  }
+
+  .check {
+    width: rem(28px);
+    height: rem(28px);
+    opacity: 1;
+    transform: scale(0.85);
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+    fill: color(neutrals, 002);
+  }
+}
+
+.contentInside {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(16px);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+
+  .badge {
+    font-weight: 500;
+    font-size: rem(14px);
+    line-height: 130%;
+    color: color(accent, danger);
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: rem(20px);
+    line-height: 130%;
+    color: color(text, primary);
+  }
+
+  .deadline {
+    font-weight: 400;
+    font-size: rem(16px);
+    line-height: 130%;
+    color: color(neutrals, 004);
+  }
+
+  .viewPrize {
+    font-weight: 600;
+    font-size: rem(16px);
+    line-height: 130%;
+    color: color(pallete, primary);
+    cursor: pointer;
+  }
+}
+
+.actions {
+  align-self: center;
+
+  .price {
+    display: flex;
+    flex-direction: column;
+    gap: rem(8px);
+    text-align: right;
+
+    strong {
+      font-weight: 600;
+      font-size: rem(20px);
+      line-height: 130%;
+      color: color(text, primary);
+    }
+
+    span {
+      font-weight: 400;
+      font-size: rem(16px);
+      line-height: 130%;
+      color: color(neutrals, 004);
+    }
+  }
+
+  .badgeSoldOut {
+    font-weight: 600;
+    font-size: rem(20px);
+    line-height: 130%;
+    color: color(text, primary);
+  }
+
+  .progress {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+    background: transparent;
+    font-weight: 600;
+    font-size: rem(18px);
+    line-height: 130%;
+    color: color(pallete, primary);
+    cursor: pointer;
+
+    svg path {
+      fill: color(pallete, primary);
+    }
+  }
+}

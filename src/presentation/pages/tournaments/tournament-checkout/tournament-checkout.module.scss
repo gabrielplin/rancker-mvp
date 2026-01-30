@@ -1,0 +1,15 @@
+@use 'styles/abstracts/functions' as *;
+@use 'styles/abstracts/breakpoints' as *;
+
+.checkoutContainer section {
+  width: 100%;
+  max-width: rem(1400px);
+  margin: 0 auto;
+  padding: 0 rem(16px);
+  overflow-x: hidden;
+
+  @include respond-to('md') {
+    overflow-x: unset;
+    // overflow-y: auto;
+  }
+}
