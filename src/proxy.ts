@@ -11,7 +11,9 @@ const PROTECTED_IF_LOGGED_PATHS = [
   '/recuperar-senha',
   '/verifique-email',
   '/nova-senha',
-  '/cadastro'
+  '/cadastro',
+  '/torneios',
+  '/torneios/open-na-ilha'
 ];
 
 export function proxy(request: NextRequest) {

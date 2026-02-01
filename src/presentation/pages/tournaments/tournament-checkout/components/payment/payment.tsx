@@ -10,70 +10,42 @@ import { useIsMobile } from '~/presentation/hooks/globals';
 import { initMercadoPago, CardPayment, Wallet } from '@mercadopago/sdk-react';
 
 import styles from './payment.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const PaymentStepComponent = () => {
   const { state, fee, selectedCategories, total } = useRegistrationFlow();
   const isMobile = useIsMobile();
-  const [payment_loading, setPaymentLoad] = useState<boolean>(false);
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
-  initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!);
+  initMercadoPago('APP_USR-c7884da4-0ab0-457c-bcf1-060f19003906');
 
   const { tournament, athlete, teams: teamsByCategory } = state;
 
-  const handlePayment = async () => {
-    try {
-      setPaymentLoad(true);
-      const response = await fetch('/api/checkout', {
+  useEffect(() => {
+    const handleCreatePreference = async () => {
+      const res = await fetch('/api/checkout', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           tournamentId: tournament?.id,
-          categories: selectedCategories.map(category => ({
-            id: category.id,
-            name: category.name,
-            price: category.price
-          })),
+          categories: selectedCategories,
+          athlete,
           teamsByCategory,
-          athlete
+          total
         })
       });
 
-      console.log(response);
+      console.log(res, 'oq é');
 
-      const { checkoutUrl } = await response.json();
+      if (!res.ok) {
+        throw new Error('Erro ao criar preferência');
+      }
 
-      window.location.href = checkoutUrl;
-    } catch (err) {
-      console.log('Erro ao iniciar pagamento', err);
-    } finally {
-      setPaymentLoad(false);
-    }
-  };
-
-  const handlePixPayment = async () => {
-    const res = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        tournamentId: tournament?.id,
-        categories: selectedCategories,
-        teamsByCategory,
-        athlete,
-        paymentMethod: 'PIX',
-        organizerAccessToken: 'gsdsdgsdgsdgsdgsdg'
-      })
-    });
-
-    const data = await res.json();
-
-    window.open(
-      data.point_of_interaction.transaction_data.ticket_url,
-      '_blank'
-    );
-  };
+      const data = await res.json();
+      setPreferenceId(data.preferenceId);
+    };
+    handleCreatePreference();
+  }, []);
 
   return (
     <section className={styles['payment']}>
@@ -133,47 +105,6 @@ const PaymentStepComponent = () => {
             ))}
           </ul>
         </div>
-
-        <div className={styles['payment__payment-selected-option']}>
-          <h4>Forma de pagamento</h4>
-
-          <CardPayment
-            initialization={{
-              amount: total,
-              payer: { email: 'gabriel.nascimenton.19@gmail.com' }
-            }}
-            customization={{
-              paymentMethods: { maxInstallments: 6 }
-            }}
-            onSubmit={async formData => {
-              await fetch('/api/checkout', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  tournamentId: tournament?.id,
-                  categories: selectedCategories.map(c => ({
-                    id: c.id,
-                    name: c.name,
-                    price: c.price
-                  })),
-                  teamsByCategory,
-                  athlete,
-                  paymentMethod: 'CREDIT',
-                  cardToken: formData.token,
-                  installments: 6,
-                  organizerAccessToken: 'sdgsdgsdgsdgsdg', // 🔑
-                  total
-                })
-              });
-            }}
-          />
-          <Wallet
-            customization={{
-              checkout: { theme: { elementsColor: '#7300ff80' } }
-            }}
-            initialization={{ preferenceId: 'dsg' }}
-          />
-        </div>
       </div>
 
       <div className={styles['payment__resume']}>
@@ -207,13 +138,15 @@ const PaymentStepComponent = () => {
         </div>
 
         <div className={styles.contentButtons}>
-          <ButtonTag
-            primary
-            size='large'
-            label={payment_loading ? 'Processando...' : 'Concluir Pagamento'}
-            full
-            onClick={handlePayment}
-          />
+          {preferenceId && (
+            <Wallet
+              customization={{
+                checkout: { theme: { elementsColor: '#7300ff80' } }
+              }}
+              initialization={{ preferenceId, redirectMode: 'blank' }}
+              locale='pt-BR'
+            />
+          )}
         </div>
       </div>
     </section>

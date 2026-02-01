@@ -3,12 +3,13 @@ import styles from './tournament-checkout.module.scss';
 
 import { StepRendererTag } from './components/steps';
 import { TournamentListItem } from '../types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { StepTabTag } from './components';
 import { useRegistrationFlow } from '~/presentation/hooks/context/tournament';
+import { Tournament } from '~/types';
 
 type TournamentCheckoutComponentProps = {
-  tournament: TournamentListItem;
+  tournament: Tournament;
 };
 
 const TournamentCheckoutComponent = (
