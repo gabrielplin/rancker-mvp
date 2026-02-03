@@ -3,7 +3,7 @@ type Props = {
   onClick: () => void;
 };
 
-import { MenuIcon } from '~/architecture/presentation/components/icons';
+import { MenuIcon } from '~/presentation/components/icons';
 import styles from './hamburger-button.module.scss';
 
 function HamburgerButtonComponent({ isOpen, onClick }: Props) {

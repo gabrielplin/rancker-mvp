@@ -1,12 +1,12 @@
 import { TournamentCategory } from '../../presentation/pages/tournaments/types';
 
 const categoryNames: TournamentCategory['name'][] = [
-  'Iniciante',
-  'Estreante',
+  'Masculino Iniciante',
+  'Masculino Estreante',
   'Amador C',
   'Amador B',
   'Amador A',
-  'Misto'
+  'Misto Estreante'
 ];
 
 const statuses: TournamentCategory['status'][] = [

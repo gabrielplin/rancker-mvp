@@ -1,5 +1,5 @@
+import { RadioGroupProps } from '../../types';
 import './radio-group.styles.scss';
-import { RadioGroupProps } from '~/architecture/presentation/components/types';
 
 function RadioGroupComponent<T extends string>({
   options,

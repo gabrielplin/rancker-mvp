@@ -8,6 +8,7 @@ export interface Category {
   maxTeams: number;
   status: CategoryStatus; // available | last_spots | sold_out | in_progress
   lastSpots?: boolean; // true se são últimas vagas
+  deadline?: string;
   prizes: Record<string, string>; // { '1º lugar': 'R$ 1.000 + Troféu' }
 }
 

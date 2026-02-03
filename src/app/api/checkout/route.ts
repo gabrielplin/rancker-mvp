@@ -1,10 +1,8 @@
 import { AthleteFormData } from '~/presentation/contexts';
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 import { NextResponse } from 'next/server';
-import {
-  PaymentMethods,
-  PreferenceRequest
-} from 'mercadopago/dist/clients/preference/commonTypes';
+import { PreferenceRequest } from 'mercadopago/dist/clients/preference/commonTypes';
+import { formatPayerName } from '~/utils';
 
 interface ApiReqProps {
   tournamentId: string;
@@ -23,8 +21,7 @@ interface ApiReqProps {
 }
 
 const mp = new MercadoPagoConfig({
-  accessToken:
-    'APP_USR-7621599853833902-013010-be4ad4369a46bec0bdf1d97bc69b0338-549470601'
+  accessToken: process.env.MP_ACCESS_TOKEN!
   // accessToken: process.env.MP_ACCESS_TOKEN!,
 });
 
@@ -53,20 +50,26 @@ export async function POST(req: Request) {
       //   unit_price: c.price
       // })),
       {
-        id: 'sssss',
+        id: '3235233332sdfgg',
         title: 'Taxa da plataforma',
         quantity: 1,
         currency_id: 'BRL',
-        unit_price: 1
+        unit_price: 1.5
       }
     ];
+
+    const payerName = formatPayerName({
+      athlete,
+      categories,
+      teamsByCategory
+    });
 
     const response = await preference.create({
       body: {
         items,
         payer: {
-          email: '17.fallcon@gmail.com',
-          name: 'Conor',
+          email: 'conrado@gmail.com',
+          name: payerName,
           surname: 'Atleta'
         },
         // payer: {
@@ -85,11 +88,11 @@ export async function POST(req: Request) {
 
         marketplace_fee: 0,
         // marketplace_fee: Number(applicationFee.toFixed(2)),
-        notification_url: `${process.env.NEXT_PUBLIC_URL}/api/webhook/mercadopago`,
+        notification_url: `https://rancker.com/api/webhook/mercadopago`,
         back_urls: {
-          success: `${process.env.NEXT_PUBLIC_URL}/success`,
-          failure: `${process.env.NEXT_PUBLIC_URL}/error`,
-          pending: `${process.env.NEXT_PUBLIC_URL}/pending`
+          success: `https://rancker.com/success`,
+          failure: `https://rancker.com/error`,
+          pending: `https://rancker.com/pending`
         }
       }
     });

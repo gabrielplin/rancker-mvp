@@ -17,7 +17,7 @@ const PaymentStepComponent = () => {
   const isMobile = useIsMobile();
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
-  initMercadoPago('APP_USR-c7884da4-0ab0-457c-bcf1-060f19003906');
+  initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!);
 
   const { tournament, athlete, teams: teamsByCategory } = state;
 
@@ -64,7 +64,7 @@ const PaymentStepComponent = () => {
                 key={category.id}
                 className={styles['payment__contentCategory']}
               >
-                <img src='/assets/png/tournament.jpg' alt='Categoria' />
+                <img src='/assets/na-ilha/ilha.png' alt='Categoria' />
                 <div>
                   <h4 className={styles['payment__tournamentName']}>
                     {tournament?.name}
@@ -78,7 +78,7 @@ const PaymentStepComponent = () => {
                     </span>
                   </div>
 
-                  {isMobile ? (
+                  {/* {isMobile ? (
                     <span className={styles.viewDuos}>Ver Duplas</span>
                   ) : (
                     <>
@@ -99,7 +99,7 @@ const PaymentStepComponent = () => {
                         </div>
                       </div>
                     </>
-                  )}
+                  )} */}
                 </div>
               </li>
             ))}

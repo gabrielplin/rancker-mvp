@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+
+import styles from './sidebar.module.scss';
 import {
   HomeIcon,
-  PaymentIcon,
   PlusIcon,
-  VolleyIcon
-} from '~/architecture/presentation/components/icons';
-import styles from './sidebar.module.scss';
+  VolleyIcon,
+  PaymentIcon
+} from '~/presentation/components/icons';
 
 type SidebarProps = {
   mode?: 'organizer' | 'athlete';

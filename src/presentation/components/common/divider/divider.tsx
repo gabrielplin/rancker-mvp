@@ -1,4 +1,4 @@
-import { DividerProps } from '~/architecture/presentation/components/types';
+import { DividerProps } from '../../types';
 import './divider.styles.scss';
 
 function DividerComponent({ children }: DividerProps) {

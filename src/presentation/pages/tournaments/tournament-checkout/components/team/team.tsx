@@ -61,7 +61,7 @@ const TeamComponent = () => {
       <p className={styles['team__subtitle']}>Selecione sua dupla.</p>
 
       <div className={styles['team__head']}>
-        <img src='/assets/png/tournament.jpg' alt='Categoria' />
+        <img src='/assets/na-ilha/ilha.png' alt='Categoria' />
         <div>
           <h2 className={styles['team__tournamentName']}>{tournament?.name}</h2>
           <>

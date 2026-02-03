@@ -17,7 +17,7 @@
     bottom: 0px;
     left: -400px;
     right: 40%;
-    background: color(pallete, tertiary);
+    background: var(--color-primary, color(pallete, tertiary));
     z-index: -1;
     border-radius: 100%;
     filter: blur(100px);
@@ -31,7 +31,7 @@
     bottom: -100px;
     left: 60%;
     right: -200px;
-    background: color(neutrals, blue-900);
+    background: var(--color-secondary, color(neutrals, blue-900));
     z-index: -1;
     border-radius: 100%;
     filter: blur(200px);

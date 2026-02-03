@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { makeSignOut } from '~/architecture/main/factories/usecases';
-import { ChevronDownIcon } from '~/architecture/presentation/components/icons';
-import { useClickOutside } from '~/architecture/presentation/hooks/globals';
+
 import styles from './menu-dropdown.module.scss';
+import { ChevronDownIcon } from '~/presentation/components/icons';
+import { useClickOutside } from '~/presentation/hooks/globals';
 
 type MenuDropdownProps = {
   user: any;
@@ -26,8 +26,8 @@ function MenuDropdownComponent({ user }: MenuDropdownProps) {
   const toggleDropdown = () => setIsOpen(value => !value);
 
   const handleSignOut = () => {
-    const authentication = makeSignOut();
-    authentication.signOut();
+    // const authentication = makeSignOut();
+    // authentication.signOut();
     router.push('/');
   };
 

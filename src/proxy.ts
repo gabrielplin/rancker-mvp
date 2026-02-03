@@ -1,7 +1,6 @@
 import CryptoJS from 'crypto-js';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { Authentication } from '~/architecture/domain/usecases';
 import { CRYPTO_TOKEN, TOKEN_NAME } from '~/config/vars';
 
 const PUBLIC_PATHS = ['/'];
@@ -13,7 +12,7 @@ const PROTECTED_IF_LOGGED_PATHS = [
   '/nova-senha',
   '/cadastro',
   '/torneios',
-  '/torneios/open-na-ilha'
+  '/torneios/na-ilha-world-cup'
 ];
 
 export function proxy(request: NextRequest) {
@@ -33,17 +32,15 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  let payload: Authentication.Response | null = null;
+  let payload: null = null;
   try {
     const bytes = CryptoJS.AES.decrypt(token, CRYPTO_TOKEN);
-    payload = JSON.parse(
-      bytes.toString(CryptoJS.enc.Utf8)
-    ) as Authentication.Response;
+    payload = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   } catch (_err) {
     return NextResponse.redirect(new URL('/entrar', request.url));
   }
 
-  const role = payload.user.type;
+  const role = null;
 
   if (isProtectedIfLogged) {
     const redirectPath = role === 'ORGANIZER' ? '/organizador' : '/atleta';

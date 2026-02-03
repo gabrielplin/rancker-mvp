@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { TournamentRegistrationHeaderTag } from '~/architecture/presentation/layouts/tournament-registration-layout/components';
+import { TournamentRegistrationHeaderTag } from './components';
 
 function TournamentRegistrationLayoutComponent({
   children

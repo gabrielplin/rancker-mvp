@@ -1,4 +1,4 @@
-import { MenuDropdownTag } from '~/architecture/presentation/layouts/components/menu-dropdown';
+import { MenuDropdownTag } from '../..';
 import styles from './header-logged.module.scss';
 
 type HeaderProps = { user: any };
