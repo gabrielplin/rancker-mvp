@@ -1,9 +1,7 @@
 import { PropsWithChildren } from 'react';
-import {
-  HeaderTag,
-  SidebarTag
-} from '~/architecture/presentation/layouts/components';
+
 import styles from './base-layout.module.scss';
+import { SidebarTag, HeaderTag } from '../components';
 
 type BaseLayoutProps = PropsWithChildren & {
   user: any;

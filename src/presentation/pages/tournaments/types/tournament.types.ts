@@ -1,12 +1,12 @@
 export type TournamentCategory = {
   id: string;
   name:
-    | 'Iniciante'
-    | 'Estreante'
+    | 'Masculino Iniciante'
+    | 'Masculino Estreante'
     | 'Amador C'
     | 'Amador B'
     | 'Amador A'
-    | 'Misto';
+    | 'Misto Estreante';
 
   price?: number;
   installments?: string;

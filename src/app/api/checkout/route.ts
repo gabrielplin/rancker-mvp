@@ -1,6 +1,8 @@
 import { AthleteFormData } from '~/presentation/contexts';
-import { MercadoPagoConfig, Payment } from 'mercadopago';
+import { MercadoPagoConfig, Preference } from 'mercadopago';
 import { NextResponse } from 'next/server';
+import { PreferenceRequest } from 'mercadopago/dist/clients/preference/commonTypes';
+import { formatPayerName } from '~/utils';
 
 interface ApiReqProps {
   tournamentId: string;
@@ -18,67 +20,87 @@ interface ApiReqProps {
   total: number;
 }
 
+const mp = new MercadoPagoConfig({
+  accessToken: process.env.MP_ACCESS_TOKEN!
+  // accessToken: process.env.MP_ACCESS_TOKEN!,
+});
+
 export async function POST(req: Request) {
-  const body = (await req.json()) as ApiReqProps;
+  try {
+    const body = (await req.json()) as ApiReqProps;
 
-  const {
-    athlete,
-    categories,
-    paymentMethod,
-    teamsByCategory,
-    tournamentId,
-    cardToken,
-    installments,
-    organizerAccessToken,
-    total
-  } = body;
+    const { athlete, categories, teamsByCategory, tournamentId, total } = body;
 
-  // 💰 Cálculos
-  const subtotal = categories.reduce((acc, c) => acc + c.price, 0);
-  const platformFee = total - subtotal; // 18
-  const totalOrganizer = total - platformFee; //total
-  const organizerFee = totalOrganizer * 0.03; // 9
-  const applicationFee = platformFee + organizerFee; // 27
-  // const total = subtotal; // 318
+    // 💰 Cálculos
+    const subtotal = categories.reduce((acc, c) => acc + c.price, 0);
+    const platformFee = total - subtotal; // 18
+    const totalOrganizer = total - platformFee; //total
+    const organizerFee = totalOrganizer * 0.03; // 9
+    const applicationFee = platformFee + organizerFee; // 27
+    // const total = subtotal; // 318
 
-  console.log(total, applicationFee, 'test');
+    const preference = new Preference(mp);
 
-  // 🔐 MP CLIENT DO ORGANIZADOR
-  const mpClient = new MercadoPagoConfig({
-    accessToken: 'APP_USR-16c799d2-61f7-47e5-b996-0392042018b5'
-  });
-
-  const payment = new Payment(mpClient);
-
-  const response = await payment.create({
-    body: {
-      transaction_amount: total,
-      description: 'Inscrição Rancker',
-
-      payment_method_id: paymentMethod === 'PIX' ? 'pix' : 'credit_card',
-
-      token: paymentMethod === 'CREDIT' ? cardToken : undefined,
-      installments:
-        paymentMethod === 'CREDIT' ? (installments ?? 1) : undefined,
-
-      payer: {
-        email: 'gabriel.nascimenton.19@gmail.com',
-        first_name: athlete.name
-      },
-
-      // 🔥 MARKETPLACE PRO
-      sponsor_id: Number(3169234014),
-
-      // COMISSÃO (Marketplace Pro)
-      application_fee: Number(applicationFee.toFixed(2)),
-
-      metadata: {
-        tournamentId,
-        athlete,
-        teamsByCategory
+    const items: PreferenceRequest['items'] = [
+      // ...categories.map(c => ({
+      //   id: c.id,
+      //   title: c.name,
+      //   quantity: 1,
+      //   currency_id: 'BRL',
+      //   unit_price: c.price
+      // })),
+      {
+        id: '3235233332sdfgg',
+        title: 'Taxa da plataforma',
+        quantity: 1,
+        currency_id: 'BRL',
+        unit_price: 1.5
       }
-    }
-  });
+    ];
 
-  return NextResponse.json(response);
+    const payerName = formatPayerName({
+      athlete,
+      categories,
+      teamsByCategory
+    });
+
+    const response = await preference.create({
+      body: {
+        items,
+        payer: {
+          email: 'conrado@gmail.com',
+          name: payerName,
+          surname: 'Atleta'
+        },
+        // payer: {
+        //   email: athlete.email,
+        //   name: athlete.name,
+        //   surname: 'Atleta'
+        // },
+
+        marketplace: 'Rancker',
+        metadata: {
+          tournamentId,
+          athlete,
+          teamsByCategory,
+          tax: applicationFee
+        },
+
+        marketplace_fee: 0,
+        // marketplace_fee: Number(applicationFee.toFixed(2)),
+        notification_url: `https://rancker.com/api/webhook/mercadopago`,
+        back_urls: {
+          success: `https://rancker.com/success`,
+          failure: `https://rancker.com/error`,
+          pending: `https://rancker.com/pending`
+        }
+      }
+    });
+
+    return NextResponse.json({
+      preferenceId: response.id
+    });
+  } catch (err) {
+    console.log(err, 'Error');
+  }
 }

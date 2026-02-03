@@ -1,10 +1,8 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import {
-  ChevronLeftIcon,
-  LogoTextIcon
-} from '~/architecture/presentation/components/icons';
+
 import styles from './tournament-registration-header.module.scss';
+import { ChevronLeftIcon, LogoTextIcon } from '~/presentation/components/icons';
 
 function TournamentRegistrationHeaderComponent() {
   const router = useRouter();

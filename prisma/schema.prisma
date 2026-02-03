@@ -29,57 +29,57 @@ enum CategoryStatus {
 }
 
 model Tournament {
-  id                String   @id @default(uuid())
-  name              String
-  slug              String   @unique
-  description       String?
+  id          String  @id @default(uuid())
+  name        String
+  slug        String  @unique
+  description String?
 
   startDate         DateTime
   endDate           DateTime
   registrationEndAt DateTime
 
-  bannerImage       String?
-  primaryColor      String?
-  secondaryColor    String?
+  bannerImage    String?
+  primaryColor   String?
+  secondaryColor String?
 
   // Endereço
-  addressName       String? // Ex: Arena Beach Sports
-  addressStreet     String?
-  addressCity       String?
-  addressState      String?
-  addressZip        String?
-  latitude          Float?
-  longitude         Float?
+  addressName   String? // Ex: Arena Beach Sports
+  addressStreet String?
+  addressCity   String?
+  addressState  String?
+  addressZip    String?
+  latitude      Float?
+  longitude     Float?
 
-  categories        Category[]
-  teams             Team[]
+  categories Category[]
+  teams      Team[]
 
-  createdAt         DateTime @default(now())
+  createdAt DateTime @default(now())
 }
 
 model Category {
-  id              String         @id @default(uuid())
-  name            String
-  price           Float
+  id    String @id @default(uuid())
+  name  String
+  price Float
 
   maxInstallments Int            @default(1)
   maxTeams        Int
   status          CategoryStatus @default(available)
 
-  prizes          Json?
+  prizes Json?
 
-  tournamentId    String
-  tournament      Tournament @relation(fields: [tournamentId], references: [id])
+  tournamentId String
+  tournament   Tournament @relation(fields: [tournamentId], references: [id])
 
-  teams           Team[]
+  teams Team[]
 
-  createdAt       DateTime @default(now())
+  createdAt DateTime @default(now())
 }
 
 model Athlete {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
-  email       String   @unique
+  email       String  @unique
   instagram   String
   phone       String
   uniformSize String?
@@ -88,22 +88,25 @@ model Athlete {
 }
 
 model Team {
-  id              String   @id @default(uuid())
+  id              String     @id @default(uuid())
   tournamentId    String
   categoryId      String
-  stripeSessionId String 
-@@index([stripeSessionId])
+  stripeSessionId String
   status          TeamStatus
-  createdAt       DateTime @default(now())
+  createdAt       DateTime   @default(now())
 
   tournament Tournament @relation(fields: [tournamentId], references: [id])
   category   Category   @relation(fields: [categoryId], references: [id])
 
+  paymentId String
+
   athletes TeamAthlete[]
+
+  @@index([stripeSessionId])
 }
 
 model TeamAthlete {
-  id        String   @id @default(uuid())
+  id        String @id @default(uuid())
   teamId    String
   athleteId String
 
@@ -111,4 +114,14 @@ model TeamAthlete {
   athlete Athlete @relation(fields: [athleteId], references: [id])
 
   @@unique([teamId, athleteId])
+}
+
+model Payment {
+  id           String   @id
+  provider     String // mercadopago
+  status       String
+  amount       Float
+  tournamentId String
+  athleteEmail String
+  createdAt    DateTime @default(now())
 }

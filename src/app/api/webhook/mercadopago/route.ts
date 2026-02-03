@@ -1,89 +1,134 @@
-import { MercadoPagoConfig, Payment } from 'mercadopago';
-import { NextResponse } from 'next/server';
-import { prisma } from '~/lib/prisma';
-import { AthleteFormData } from '~/presentation/contexts';
+// import { MercadoPagoConfig, Payment } from 'mercadopago';
+// import { NextResponse } from 'next/server';
+// import { prisma } from '~/lib/prisma';
+// import { AthleteFormData } from '~/presentation/contexts';
 
-export async function POST(req: Request) {
-  const body = await req.json();
+// export async function POST(req: Request) {
+//   let body: any;
 
-  if (body.type !== 'payment') {
-    return NextResponse.json({ received: true });
-  }
+//   try {
+//     body = await req.json();
+//   } catch {
+//     return NextResponse.json({ received: true });
+//   }
 
-  const paymentId = body.data.id;
+//   /**
+//    * Mercado Pago envia vários eventos
+//    * Só processamos payment
+//    */
+//   if (body.type !== 'payment') {
+//     return NextResponse.json({ received: true });
+//   }
 
-  const mpClient = new MercadoPagoConfig({
-    accessToken: process.env.MP_ACCESS_TOKEN! // pode ser o seu
-  });
+//   const paymentId = body.data?.id;
+//   if (!paymentId) {
+//     return NextResponse.json({ received: true });
+//   }
 
-  const paymentClient = new Payment(mpClient);
-  const payment = await paymentClient.get({ id: paymentId });
+//   const mpClient = new MercadoPagoConfig({
+//     accessToken: process.env.MP_ACCESS_TOKEN!
+//   });
 
-  if (payment.status !== 'approved') {
-    return NextResponse.json({ received: true });
-  }
+//   const paymentClient = new Payment(mpClient);
+//   const payment = await paymentClient.get({ id: String(paymentId) });
 
-  const { athlete, teamsByCategory, tournamentId } = payment.metadata;
+//   /**
+//    * PIX e cartão só entram aqui quando CONFIRMADOS
+//    */
+//   if (payment.status !== 'approved') {
+//     return NextResponse.json({ received: true });
+//   }
 
-  try {
-    const alreadyProcessed = await prisma.team.findFirst({
-      where: { stripeSessionId: String(paymentId) }
-    });
+//   const { athlete, teamsByCategory, tournamentId } = payment.metadata as {
+//     athlete: AthleteFormData;
+//     teamsByCategory: Record<string, AthleteFormData>;
+//     tournamentId: string;
+//   };
 
-    if (alreadyProcessed) return NextResponse.json({ received: true });
+//   try {
+//     await prisma.$transaction(async (tx) => {
+//       /**
+//        * 🔒 Idempotência forte
+//        */
+//       const alreadyProcessed = await tx.payment.findUnique({
+//         where: { id: String(paymentId) }
+//       });
 
-    const mainAthlete = await prisma.athlete.upsert({
-      where: { email: athlete.email },
-      update: athlete,
-      create: athlete
-    });
+//       if (alreadyProcessed) return;
 
-    for (const [categoryId, partner] of Object.entries(
-      teamsByCategory as Record<string, AthleteFormData>
-    )) {
-      const category = await prisma.category.findFirst({
-        where: { id: categoryId, tournamentId }
-      });
+//       /**
+//        * 💾 Salva pagamento
+//        */
+//       await tx.payment.create({
+//         data: {
+//           id: String(paymentId),
+//           provider: 'mercadopago',
+//           status: payment.status,
+//           amount: payment.transaction_amount,
+//           tournamentId,
+//           athleteEmail: athlete.email
+//         }
+//       });
 
-      if (!category) continue;
+//       /**
+//        * 🧍‍♂️ Atleta principal
+//        */
+//       const mainAthlete = await tx.athlete.upsert({
+//         where: { email: athlete.email },
+//         update: athlete,
+//         create: athlete
+//       });
 
-      const teamsCount = await prisma.team.count({ where: { categoryId } });
+//       /**
+//        * 🏆 Criação dos times
+//        */
+//       for (const [categoryId, partner] of Object.entries(teamsByCategory)) {
+//         const category = await tx.category.findFirst({
+//           where: { id: categoryId, tournamentId }
+//         });
 
-      if (teamsCount >= category.maxTeams) {
-        await prisma.category.update({
-          where: { id: categoryId },
-          data: { status: 'sold_out' }
-        });
-        continue;
-      }
+//         if (!category) continue;
 
-      const partnerAthlete = await prisma.athlete.upsert({
-        where: { email: partner.email },
-        update: partner,
-        create: partner
-      });
+//         const teamsCount = await tx.team.count({
+//           where: { categoryId }
+//         });
 
-      await prisma.team.create({
-        data: {
-          tournamentId,
-          categoryId,
-          stripeSessionId: String(paymentId),
-          status: 'paid',
-          athletes: {
-            create: [
-              { athleteId: mainAthlete.id },
-              { athleteId: partnerAthlete.id }
-            ]
-          }
-        }
-      });
-    }
+//         if (teamsCount >= category.maxTeams) {
+//           await tx.category.update({
+//             where: { id: categoryId },
+//             data: { status: 'sold_out' }
+//           });
+//           continue;
+//         }
 
-    console.log('✅ MP pagamento processado:', paymentId);
-  } catch (err) {
-    console.error('❌ Webhook MP erro', err);
-    return new NextResponse('Internal error', { status: 500 });
-  }
+//         const partnerAthlete = await tx.athlete.upsert({
+//           where: { email: partner.email },
+//           update: partner,
+//           create: partner
+//         });
 
-  return NextResponse.json({ received: true });
-}
+//         await tx.team.create({
+//           data: {
+//             tournamentId,
+//             categoryId,
+//             stripeSessionId: String(paymentId),
+//             status: 'paid',
+//             athletes: {
+//               create: [
+//                 { athleteId: mainAthlete.id },
+//                 { athleteId: partnerAthlete.id }
+//               ]
+//             }
+//           }
+//         });
+//       }
+//     });
+
+//     console.log('✅ MP pagamento confirmado:', paymentId);
+//   } catch (err) {
+//     console.error('❌ Webhook MP erro:', err);
+//     return new NextResponse('Internal error', { status: 500 });
+//   }
+
+//   return NextResponse.json({ received: true });
+// }

@@ -52,15 +52,17 @@ export const RegistrationFlowProvider = ({
       ),
     [selectedCategories]
   );
-  const fee = subtotal * 0.06;
+  const fee = subtotal * 0.04;
 
   const total = subtotal + fee;
 
-  const hasAllTeamsSelected = useMemo(() => {
-    return selectedCategories.every(category =>
-      Boolean(state.teams[category.id]?.length)
-    );
-  }, [selectedCategories, state.teams]);
+  // const hasAllTeamsSelected = useMemo(() => {
+  //   return selectedCategories.every(category =>
+  //     Boolean(state.teams[category.id]?.length)
+  //   );
+  // }, [selectedCategories, state.teams]);
+
+  const hasAllTeamsSelected = true;
 
   /* ---------------- ACTIONS ---------------- */
 

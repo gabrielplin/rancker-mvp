@@ -66,7 +66,15 @@ const CategoryComponent = () => {
 
   return (
     <section>
-      <div className={styles.heroTournament}>
+      <div
+        className={styles.heroTournament}
+        style={
+          {
+            '--color-primary': tournament?.primaryColor,
+            '--color-secondary': tournament?.secondaryColor
+          } as React.CSSProperties
+        }
+      >
         <div className={styles.info}>
           <h2 className={styles.title}>{tournament?.name}</h2>
           <p className={styles.subtitle}>Organizado por {tournament?.name}</p>
@@ -95,7 +103,7 @@ const CategoryComponent = () => {
         </div>
 
         <img
-          src='/assets/png/man-playing-foot-volley.png'
+          src='/assets/na-ilha/ilha.png'
           alt='Banner Torneio'
           className={styles.bannerHero}
         />
@@ -155,7 +163,7 @@ const CategoryComponent = () => {
                 </li>
               ))}
               <li>
-                <span>Taxas (6%)</span>
+                <span>Taxas</span>
                 <span>R$ {fee.toFixed(2)}</span>
               </li>
             </ul>

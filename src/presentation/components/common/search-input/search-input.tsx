@@ -1,8 +1,8 @@
 'use client';
 import { Controller } from 'react-hook-form';
 import './search-input.styles.scss';
-import { SearchInputProps } from '~/architecture/presentation/components/types';
 import { SearchIcon } from '../../icons';
+import { SearchInputProps } from '../../types';
 
 function SearchInputComponent(props: SearchInputProps) {
   const {

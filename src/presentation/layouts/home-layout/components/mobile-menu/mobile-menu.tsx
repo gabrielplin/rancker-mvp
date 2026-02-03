@@ -1,12 +1,7 @@
-import {
-  NavbarTag,
-  ButtonsGroupTag
-} from '~/architecture/presentation/layouts/home-layout/components';
+import { LogoWhiteTag, CloseIcon } from '~/presentation/components/icons';
+import { ButtonsGroupTag } from '../buttons-group';
+import { NavbarTag } from '../navbar';
 import styles from './mobile-menu.module.scss';
-import {
-  CloseIcon,
-  LogoWhiteTag
-} from '~/architecture/presentation/components/icons';
 
 type Props = {
   isOpen: boolean;

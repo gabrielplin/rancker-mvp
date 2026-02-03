@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
-import { FooterTag } from '~/architecture/presentation/components/common';
 import { HeaderTag } from './components';
 import styles from './home-layout.module.scss';
+import { FooterTag } from '~/presentation/components/common';
 
 function HomeLayoutComponent({ children }: PropsWithChildren) {
   return (

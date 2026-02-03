@@ -92,6 +92,7 @@ const InfoComponent = () => {
         <Controller
           name='athlete.uniformSize'
           control={control}
+          defaultValue={'P'}
           rules={{ required: 'Selecione o tamanho do uniforme' }}
           render={({ field }) => (
             <SelectTag

@@ -143,13 +143,13 @@ const SummaryComponent = () => {
                 size='large'
                 label='Seguir Comprando'
                 full
-                onClick={() => setStep('summary')}
+                // onClick={() => setStep('summary')}
               />
               <ButtonTag
                 full
                 size='large'
                 label='Ir para o inicio'
-                onClick={() => setStep('summary')}
+                // onClick={() => setStep('summary')}
               />
             </div>
           </div>

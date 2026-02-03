@@ -1,12 +1,13 @@
-'use client';
+import { LogoutLayoutTag } from '~/presentation/layouts/logout-layout';
 
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-
-export default function Home() {
-  const router = useRouter();
-  useEffect(() => {
-    router.push('/torneios');
-  });
-  return <></>;
+export default async function Home() {
+  // console.log('bateu aqui');
+  // useEffect(() => {
+  //   router.push('/torneios');
+  // }, []);
+  return (
+    <LogoutLayoutTag>
+      {/* <TournamentListTag tournament={tournaments} /> */}
+    </LogoutLayoutTag>
+  );
 }
