@@ -68,7 +68,10 @@ const CategoryComponent = () => {
     return '';
   };
 
-  const currentPrize = tournament?.categories[Number(modalReward)].prizes;
+  const currentPrize =
+    typeof modalReward === 'number'
+      ? tournament?.categories[modalReward].prizes
+      : {};
 
   return (
     <section>
