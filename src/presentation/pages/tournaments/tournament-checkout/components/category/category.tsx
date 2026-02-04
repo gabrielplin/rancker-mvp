@@ -64,6 +64,15 @@ const CategoryComponent = () => {
     setCategories(selectedCategoryIds);
   }, [selectedCategoryIds]);
 
+  const mapperDeadline = (index: number): string => {
+    if (index === 0) return '18/04/2026';
+    if (index === 1) return '19/04/2026';
+    if (index === 2) return '25/04/2026';
+    if (index === 3) return '26/04/2026';
+
+    return '';
+  };
+
   return (
     <section>
       <div
@@ -114,7 +123,7 @@ const CategoryComponent = () => {
 
         <div className={styles.selectionContainer}>
           <div className={styles.selectionList}>
-            {tournament?.categories.map(category => (
+            {tournament?.categories.map((category, i) => (
               <Controller
                 key={category.id}
                 name={'categories'}
@@ -129,7 +138,7 @@ const CategoryComponent = () => {
                       status={category.status}
                       price={category.price}
                       installments={`Em até ${category.maxInstallments}x de R$ ${installments(category.maxInstallments)}`}
-                      deadline={'Abertas até 26/01/25'}
+                      deadline={mapperDeadline(i)}
                       checked={isChecked}
                       onSelect={checked => {
                         if (checked) {
@@ -231,8 +240,23 @@ const CategoryComponent = () => {
 
       <div className={styles.contentInfo}>
         <h2>Descrição</h2>
+        <br />
 
-        <p>{tournament?.description}</p>
+        <p>🌍⚽ NA ILHA WORLD CUP ⚽🌍</p>
+        <br />
+
+        <p>O futevôlei entrou em clima de Copa do Mundo.</p>
+        <p>
+          O Na Ilha World Cup nasce inspirado na Copa do Mundo de 2026 e traz
+          para o futevôlei um formato inédito, nunca visto antes.
+        </p>
+        <p>
+          Jogos com hora marcada! Nivelamento levado a sério! Formato inédito no
+          futevôlei Cada dupla representa uma seleção!
+        </p>
+        <p>
+          Na Ilha World Cup: onde o futevôlei vive a emoção de uma Copa do Mundo
+        </p>
       </div>
 
       <div className={styles.contentInfo}>

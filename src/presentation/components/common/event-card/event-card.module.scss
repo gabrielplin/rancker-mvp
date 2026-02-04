@@ -1,6 +1,9 @@
 @use '../../../../styles/abstracts/functions' as *;
 
 .card {
+  width: 100%;
+  max-width: 350px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   gap: rem(24px);

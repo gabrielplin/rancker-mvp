@@ -3,6 +3,7 @@ import { MercadoPagoConfig, Preference } from 'mercadopago';
 import { NextResponse } from 'next/server';
 import { PreferenceRequest } from 'mercadopago/dist/clients/preference/commonTypes';
 import { formatPayerName } from '~/utils';
+import { prisma } from '~/lib/prisma';
 
 interface ApiReqProps {
   tournamentId: string;
@@ -22,7 +23,6 @@ interface ApiReqProps {
 
 const mp = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN!
-  // accessToken: process.env.MP_ACCESS_TOKEN!,
 });
 
 export async function POST(req: Request) {
@@ -37,24 +37,23 @@ export async function POST(req: Request) {
     const totalOrganizer = total - platformFee; //total
     const organizerFee = totalOrganizer * 0.03; // 9
     const applicationFee = platformFee + organizerFee; // 27
-    // const total = subtotal; // 318
 
     const preference = new Preference(mp);
 
     const items: PreferenceRequest['items'] = [
-      // ...categories.map(c => ({
-      //   id: c.id,
-      //   title: c.name,
-      //   quantity: 1,
-      //   currency_id: 'BRL',
-      //   unit_price: c.price
-      // })),
+      ...categories.map(c => ({
+        id: c.id,
+        title: c.name,
+        quantity: 1,
+        currency_id: 'BRL',
+        unit_price: c.price
+      })),
       {
         id: '3235233332sdfgg',
         title: 'Taxa da plataforma',
         quantity: 1,
         currency_id: 'BRL',
-        unit_price: 1.5
+        unit_price: platformFee
       }
     ];
 
@@ -68,15 +67,10 @@ export async function POST(req: Request) {
       body: {
         items,
         payer: {
-          email: 'conrado@gmail.com',
+          email: athlete.email,
           name: payerName,
           surname: 'Atleta'
         },
-        // payer: {
-        //   email: athlete.email,
-        //   name: athlete.name,
-        //   surname: 'Atleta'
-        // },
 
         marketplace: 'Rancker',
         metadata: {
@@ -86,14 +80,59 @@ export async function POST(req: Request) {
           tax: applicationFee
         },
 
-        marketplace_fee: 0,
-        // marketplace_fee: Number(applicationFee.toFixed(2)),
-        notification_url: `https://rancker.com/api/webhook/mercadopago`,
         back_urls: {
-          success: `https://rancker.com/success`,
-          failure: `https://rancker.com/error`,
-          pending: `https://rancker.com/pending`
+          success: `https://rancker-mvp.vercel.app/success`,
+          failure: `https://rancker-mvp.vercel.app/error`,
+          pending: `https://rancker-mvp.vercel.app/pending`
         }
+      }
+    });
+
+    /* ------------------------------------------------------------------
+     * 3️⃣ Persistência no banco (ATÔMICA + PROTEGIDA)
+     * ------------------------------------------------------------------ */
+    await prisma.$transaction(async tx => {
+      // atleta principal
+      const mainAthlete = await tx.athlete.upsert({
+        where: { email: athlete.email },
+        update: athlete,
+        create: athlete
+      });
+
+      // para cada categoria cria a dupla
+      for (const [categoryId, partner] of Object.entries(teamsByCategory)) {
+        const partnerAthlete = await tx.athlete.upsert({
+          where: { email: partner.email },
+          update: partner,
+          create: partner
+        });
+
+        // 🔒 proteção contra duplicação
+        const existingTeam = await tx.team.findFirst({
+          where: {
+            tournamentId,
+            categoryId,
+            paymentId: String(response.id)
+          }
+        });
+
+        if (existingTeam) continue;
+
+        await tx.team.create({
+          data: {
+            tournamentId,
+            categoryId,
+            status: 'pending', // 👈 você valida manualmente depois
+            paymentId: String(response.id),
+            stripeSessionId: String(response.id), // reaproveitando campo
+            athletes: {
+              create: [
+                { athleteId: mainAthlete.id },
+                { athleteId: partnerAthlete.id }
+              ]
+            }
+          }
+        });
       }
     });
 

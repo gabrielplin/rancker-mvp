@@ -47,8 +47,6 @@ const InfoComponent = () => {
     { label: 'XG', value: 'XG' }
   ];
 
-  console.log(athleteRegister, 'wtach');
-
   useEffect(() => {
     setValue('athlete', athlete);
   }, []);
@@ -92,8 +90,8 @@ const InfoComponent = () => {
         <Controller
           name='athlete.uniformSize'
           control={control}
-          defaultValue={'P'}
           rules={{ required: 'Selecione o tamanho do uniforme' }}
+          defaultValue='P'
           render={({ field }) => (
             <SelectTag
               label='Tamanho do uniforme'

@@ -19,7 +19,7 @@ function TournamentList({ tournament }: TournamentCheckoutProps) {
               status='OPENED'
               type={event.categories[0].name}
               date={event.startDate}
-              banner={'/assets/png/tournament.jpg'}
+              banner={'/assets/na-ilha/ilha.png'}
               slug={event.slug}
             />
           );

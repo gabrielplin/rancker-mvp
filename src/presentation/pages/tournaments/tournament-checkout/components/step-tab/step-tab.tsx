@@ -73,7 +73,6 @@ const StepTabDesktop = () => {
     <ul className={styles['step-tab']}>
       {Object.entries(steps).map(([item, label], index) => {
         const isCompleted = index <= currentStepIndex;
-        console.log(isCompleted, 'isCompleted');
         return (
           <li
             className={isCompleted ? styles['step-tab__active'] : ''}
@@ -103,8 +102,6 @@ const StepCircleMobile = () => {
   const nextStep = nextStepEntry ? nextStepEntry[1] : null;
 
   const isNotLastStep = currentStepIndex !== 4;
-
-  console.log(isNotLastStep, stepLength);
 
   return (
     <div className={styles['step-mobile']}>

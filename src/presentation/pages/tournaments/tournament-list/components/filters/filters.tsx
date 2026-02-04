@@ -37,7 +37,6 @@ function FiltersComponent() {
   };
 
   const onSubmit = (data: FullFilterFormValues) => {
-    console.log('Filtros e busca aplicados:', data);
     handleToggleModal();
   };
 

@@ -1,51 +1,45 @@
 'use client';
 
-import {
-  DividerTag,
-  ButtonTag,
-  TooltipTag
-} from '~/presentation/components/common';
+import { ButtonTag, TooltipTag } from '~/presentation/components/common';
 import { useRegistrationFlow } from '~/presentation/hooks/context/tournament';
 import { useIsMobile } from '~/presentation/hooks/globals';
-import { initMercadoPago, CardPayment, Wallet } from '@mercadopago/sdk-react';
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 
 import styles from './payment.module.scss';
-import { useEffect, useState } from 'react';
+import { useState, memo } from 'react';
 
 const PaymentStepComponent = () => {
   const { state, fee, selectedCategories, total } = useRegistrationFlow();
-  const isMobile = useIsMobile();
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  const isMobile = useIsMobile();
+  const [isLoading, setLoad] = useState<boolean>(false);
 
   initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!);
 
   const { tournament, athlete, teams: teamsByCategory } = state;
 
-  useEffect(() => {
-    const handleCreatePreference = async () => {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tournamentId: tournament?.id,
-          categories: selectedCategories,
-          athlete,
-          teamsByCategory,
-          total
-        })
-      });
+  const handleCreatePreference = async () => {
+    setLoad(true);
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        tournamentId: tournament?.id,
+        categories: selectedCategories,
+        athlete,
+        teamsByCategory,
+        total
+      })
+    });
 
-      console.log(res, 'oq é');
+    if (!res.ok) {
+      throw new Error('Erro ao criar preferência');
+    }
 
-      if (!res.ok) {
-        throw new Error('Erro ao criar preferência');
-      }
-
-      const data = await res.json();
-      setPreferenceId(data.preferenceId);
-    };
-    handleCreatePreference();
-  }, []);
+    const data = await res.json();
+    setPreferenceId(data.preferenceId);
+    setLoad(false);
+  };
 
   return (
     <section className={styles['payment']}>
@@ -143,8 +137,21 @@ const PaymentStepComponent = () => {
               customization={{
                 checkout: { theme: { elementsColor: '#7300ff80' } }
               }}
-              initialization={{ preferenceId, redirectMode: 'blank' }}
+              initialization={{
+                preferenceId,
+                redirectMode: isMobile ? 'self' : 'blank'
+              }}
               locale='pt-BR'
+            />
+          )}
+
+          {!preferenceId && (
+            <ButtonTag
+              label={isLoading ? 'Criando pagamento...' : 'Finalizar inscrição'}
+              full
+              size='large'
+              primary
+              onClick={handleCreatePreference}
             />
           )}
         </div>
@@ -153,4 +160,4 @@ const PaymentStepComponent = () => {
   );
 };
 
-export default PaymentStepComponent;
+export default memo(PaymentStepComponent);

@@ -50,8 +50,6 @@ const TeamComponent = () => {
     { label: 'XG', value: 'XG' }
   ];
 
-  console.log(teamsSelected, 'wtach');
-
   useEffect(() => {
     setValue('teams', teams);
   }, []);

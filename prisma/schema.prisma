@@ -103,6 +103,7 @@ model Team {
   athletes TeamAthlete[]
 
   @@index([stripeSessionId])
+  @@unique([tournamentId, categoryId, paymentId])
 }
 
 model TeamAthlete {

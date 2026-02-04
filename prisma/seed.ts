@@ -12,28 +12,29 @@ async function main() {
   // 🏆 Torneio
   const tournament = await prisma.tournament.create({
     data: {
-      name: 'Open na Ilha',
-      slug: 'open-na-ilha',
+      id: 'na-ilha-180426',
+      name: 'Na Ilha World Cup',
+      slug: 'na-ilha-world-cup',
       description:
-        'O maior torneio de beach tennis da região. Categorias para todos os níveis.',
+        'Os jogos terão início às 8:30h. A chegada dos grupos será marcada para 30 min antes do início dos jogos. Lembrando que os grupos e horários serão pré definidos. Ex: Grupo A, B e C chegada às 8h e inicio dos jogos às 8:30h. A tolerância de atraso será de 10 minutos no primeira rodada e 5 minutos nos demais jogos. Do contrário, será contabilizado como W.O.',
 
-      startDate: new Date('2026-02-20T08:00:00Z'),
-      endDate: new Date('2026-02-23T22:00:00Z'),
-      registrationEndAt: new Date('2026-02-15T23:59:59Z'),
+      startDate: new Date('2026-04-18T08:00:00Z'),
+      endDate: new Date('2026-04-26T22:00:00Z'),
+      registrationEndAt: new Date('2026-04-18T23:59:59Z'),
 
       bannerImage:
         'https://rancker-assets.s3.amazonaws.com/banners/open-na-ilha.png',
 
-      primaryColor: '#0F172A',
-      secondaryColor: '#38BDF8',
+      primaryColor: '#d10100',
+      secondaryColor: '#721310',
 
-      addressName: 'Arena Ilha Sports',
-      addressStreet: 'Av. Beira Mar, 1234',
-      addressCity: 'Florianópolis',
-      addressState: 'SC',
-      addressZip: '88000-000',
-      latitude: -27.59487,
-      longitude: -48.54822
+      addressName: 'Na Ilha Beach Sports',
+      addressStreet: 'Praça sete de fevereiro, 89',
+      addressCity: 'São Paulo',
+      addressState: 'SP',
+      addressZip: '03358-020',
+      latitude: -23.5636982,
+      longitude: -46.5514279
     }
   });
 
@@ -41,10 +42,11 @@ async function main() {
   await prisma.category.createMany({
     data: [
       {
-        name: 'Amador B + C',
-        price: 320,
-        maxInstallments: 3,
-        maxTeams: 32,
+        id: 'na-ilha-masc-e',
+        name: 'Masculino Estreante',
+        price: 290,
+        maxInstallments: 6,
+        maxTeams: 48,
         status: CategoryStatus.available,
         prizes: {
           '1º lugar': 'R$ 1.000 + Troféu',
@@ -54,34 +56,39 @@ async function main() {
         tournamentId: tournament.id
       },
       {
-        name: 'Iniciante',
-        price: 320,
-        maxInstallments: 2,
-        maxTeams: 24,
+        id: 'na-ilha-mist-e',
+        name: 'Misto Estreante',
+        price: 290,
+        maxInstallments: 6,
+        maxTeams: 48,
         status: CategoryStatus.available,
         prizes: {
-          '1º lugar': 'Troféu + Brindes',
-          '2º lugar': 'Brindes'
+          '1º lugar': 'R$ 1.000 + Troféu',
+          '2º lugar': 'R$ 500',
+          '3º lugar': 'Kit patrocinador'
         },
         tournamentId: tournament.id
       },
       {
-        name: 'Estreante',
-        price: 320,
-        maxInstallments: 2,
-        maxTeams: 24,
+        id: 'na-ilha-masc-i',
+        name: 'Masculino Iniciante',
+        price: 290,
+        maxInstallments: 6,
+        maxTeams: 48,
         status: CategoryStatus.available,
         prizes: {
-          '1º lugar': 'Troféu',
-          '2º lugar': 'Medalha'
+          '1º lugar': 'R$ 1.000 + Troféu',
+          '2º lugar': 'R$ 500',
+          '3º lugar': 'Kit patrocinador'
         },
         tournamentId: tournament.id
       },
       {
-        name: 'Open',
-        price: 320,
-        maxInstallments: 4,
-        maxTeams: 16,
+        id: 'na-ilha-amad-c',
+        name: 'Amador C',
+        price: 290,
+        maxInstallments: 6,
+        maxTeams: 48,
         status: CategoryStatus.available,
         prizes: {
           '1º lugar': 'R$ 2.000 + Troféu',
