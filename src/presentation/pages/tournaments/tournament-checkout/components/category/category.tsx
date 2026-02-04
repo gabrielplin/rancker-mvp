@@ -290,15 +290,23 @@ const CategoryComponent = () => {
               <MedalIcon />
 
               <div className={styles.rewardInfo}>
-                <span>Troféus</span>
-                <p>À todos os participantes</p>
+                <span>1o lugar</span>
+                <p>Réplica da taça</p>
               </div>
             </li>
             <li className={styles.rewardItem}>
               <MedalIcon />
 
               <div className={styles.rewardInfo}>
-                <span>1o lugar</span>
+                <span>2o ao 4o lugar</span>
+                <p>Troféus e brindes</p>
+              </div>
+            </li>
+            <li className={styles.rewardItem}>
+              <MedalIcon />
+
+              <div className={styles.rewardInfo}>
+                <span>1o Amador C</span>
                 <p>R$ 1.000,00</p>
               </div>
             </li>
@@ -306,8 +314,8 @@ const CategoryComponent = () => {
               <MedalIcon />
 
               <div className={styles.rewardInfo}>
-                <span>2o lugar</span>
-                <p>R$ 500,00</p>
+                <span>2o Amador C</span>
+                <p>R$ 400,00</p>
               </div>
             </li>
           </ul>
