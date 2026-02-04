@@ -1,28 +1,27 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-
-import styles from './category.module.scss';
-
-import { TournamentCardTag } from '../tournament-card';
-import { Controller, useForm } from 'react-hook-form';
-import { FormDataCategory } from '../../../types';
 import { useEffect, useState } from 'react';
-import { useIsMobile } from '~/presentation/hooks/globals';
-import { useRegistrationFlow } from '~/presentation/hooks/context/tournament';
+import { Controller, useForm } from 'react-hook-form';
+import { formatDateBR } from '~/utils';
 import { ButtonTag, ModalTag } from '~/presentation/components/common';
 import {
   CalendarIcon,
   LocationIcon,
   MedalIcon
 } from '~/presentation/components/icons';
-import { formatDateBR } from '~/utils';
+import { useRegistrationFlow } from '~/presentation/hooks/context/tournament';
+import { useIsMobile } from '~/presentation/hooks/globals';
+import { FormDataCategory } from '../../../types';
+import { TournamentCardTag } from '../tournament-card';
+import styles from './category.module.scss';
 
 const CategoryComponent = () => {
   const router = useRouter();
   const isMobile = useIsMobile();
   const [modalSummary, setModalSummary] = useState<boolean>(false);
-  const [modalReward, setModalReward] = useState<boolean>(false);
+  const [modalReward, setModalReward] = useState<number | null>(null);
+  const [modalRules, setModalRules] = useState<boolean>(false);
 
   const { control, watch } = useForm<FormDataCategory>({
     defaultValues: {
@@ -43,10 +42,6 @@ const CategoryComponent = () => {
     (total / installment).toFixed(2); // 3x installment
 
   const handleNext = async () => {
-    // await startRegistration.execute({
-    //   tournamentSlug: state.tournamentSlug,
-    //   categoryIds: state.categoryIds
-    // });
     setStep('info');
   };
 
@@ -72,6 +67,8 @@ const CategoryComponent = () => {
 
     return '';
   };
+
+  const currentPrize = tournament?.categories[Number(modalReward)].prizes;
 
   return (
     <section>
@@ -118,6 +115,12 @@ const CategoryComponent = () => {
         />
       </div>
 
+      <ButtonTag
+        label='Ver Regulamento'
+        variant='default'
+        onClick={() => setModalRules(true)}
+      />
+
       <div id='categorias' className={styles.categorySelection}>
         <h3>Escolha quais categorias você quer participar</h3>
 
@@ -149,7 +152,7 @@ const CategoryComponent = () => {
                           );
                         }
                       }}
-                      onViewPrize={() => setModalReward(true)}
+                      onViewPrize={() => setModalReward(i)}
                     />
                   );
                 }}
@@ -281,43 +284,23 @@ const CategoryComponent = () => {
         <span onClick={goToWaze}>Abrir no waze</span>
       </div>
 
-      <ModalTag open={modalReward} onClose={() => setModalReward(false)}>
+      <ModalTag
+        open={modalReward !== null}
+        onClose={() => setModalReward(null)}
+      >
         <div className={styles.rewardContent}>
           <h2 className={styles.rewardTitle}>Premiação</h2>
 
           <ul className={styles.rewardsList}>
-            <li className={styles.rewardItem}>
-              <MedalIcon />
-
-              <div className={styles.rewardInfo}>
-                <span>1o lugar</span>
-                <p>Réplica da taça</p>
-              </div>
-            </li>
-            <li className={styles.rewardItem}>
-              <MedalIcon />
-
-              <div className={styles.rewardInfo}>
-                <span>2o ao 4o lugar</span>
-                <p>Troféus e brindes</p>
-              </div>
-            </li>
-            <li className={styles.rewardItem}>
-              <MedalIcon />
-
-              <div className={styles.rewardInfo}>
-                <span>1o Amador C</span>
-                <p>R$ 1.000,00</p>
-              </div>
-            </li>
-            <li className={styles.rewardItem}>
-              <MedalIcon />
-
-              <div className={styles.rewardInfo}>
-                <span>2o Amador C</span>
-                <p>R$ 400,00</p>
-              </div>
-            </li>
+            {Object.entries(currentPrize!).map(([k, v]) => (
+              <li key={k} className={styles.rewardItem}>
+                <MedalIcon />
+                <div className={styles.rewardInfo}>
+                  <span>{k}</span>
+                  <p>{v}</p>
+                </div>
+              </li>
+            ))}
           </ul>
 
           {isMobile && (
@@ -325,9 +308,92 @@ const CategoryComponent = () => {
               label='Fechar'
               primary
               size='large'
-              onClick={() => setModalReward(false)}
+              onClick={() => setModalReward(null)}
             />
           )}
+        </div>
+      </ModalTag>
+
+      <ModalTag open={modalRules} onClose={() => setModalRules(false)}>
+        <div className={styles.contentModalRules}>
+          <h1>Na Ilha World Cup</h1>
+
+          <h2>1. Categorias</h2>
+
+          <p>O torneio contará com 48 duplas por categoria:</p>
+          <p>Masculino Estreante no dia 18/04</p>
+          <p>Misto Iniciante no dia 19/04</p>
+          <p>Masculino Iniciante no dia 25/04</p>
+          <p>Masculino C no dia 26/04</p>
+
+          <h2>2. Modelo de Disputa</h2>
+
+          <p>
+            O formato de disputa será inspirado no modelo da Copa do Mundo de
+            2026, composto por fase de grupos e fase eliminatória.
+          </p>
+          <p>Cada categoria começa e termina no mesmo dia.</p>
+
+          <h2>3. Fase de Grupos</h2>
+
+          <p>
+            As duplas serão distribuídas em grupos conforme sorteio da
+            organização. A fase de grupos terá horário previamente determinado
+            para cada grupo e divulgado antes do início da competição. Os jogos
+            ocorrerão em blocos de três grupos por horário.
+          </p>
+          <p>Exemplo:</p>
+          <p>08h00 – Grupos A, B e C</p>
+          <p>09h30 – Grupos D, E e F</p>
+
+          <h2>4. Horários</h2>
+
+          <p>
+            Os jogos terão início às 8:30h. A chegada dos grupos será marcada
+            para 30 min antes do início dos jogos. Lembrando que os grupos e
+            horários serão pré definidos. Ex: Grupo A, B e C chegada às 8h e
+            inicio dos jogos às 8:30h. A tolerância de atraso será de 10 minutos
+            no primeira rodada e 5 minutos nos demais jogos. Do contrário, será
+            contabilizado como W.O.
+          </p>
+
+          <h2>5. Classificação</h2>
+
+          <p>
+            Avançam para a fase eliminatória os 2 melhores colocados de cada
+            grupo e os 8 melhores terceiros colocados do geral, conforme
+            critérios definidos pela organização.
+          </p>
+          <p>
+            A lista oficial dos classificados será divulgada no Instagram
+            oficial do torneio ao final da fase de grupos. É de inteira
+            responsabilidade dos atletas acompanhar e verificar sua
+            classificação.
+          </p>
+
+          <h2>6. Fase Eliminatória</h2>
+
+          <p>
+            A fase eliminatória terá início às 17h, com confrontos em formato
+            mata-mata até a definição dos campeões.
+          </p>
+
+          <h2>7. Inscrição e Nivelamento</h2>
+
+          <p>
+            É de total responsabilidade do atleta se inscrever na categoria
+            correta para seu nível técnico. A organização se reserva o direito
+            de eliminar duplas inscritas em categoria incompatível com seu
+            nível, sem direito a reembolso.
+          </p>
+
+          <h2>8. Disposições Gerais</h2>
+
+          <p>
+            A organização poderá ajustar horários, quadras ou tabelas visando o
+            bom andamento do evento. Casos omissos neste regulamento serão
+            resolvidos exclusivamente pela organização.
+          </p>
         </div>
       </ModalTag>
     </section>

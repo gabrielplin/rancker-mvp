@@ -1,45 +1,14 @@
 'use client';
 
-import { ButtonTag, TooltipTag } from '~/presentation/components/common';
+import { TooltipTag } from '~/presentation/components/common';
 import { useRegistrationFlow } from '~/presentation/hooks/context/tournament';
-import { useIsMobile } from '~/presentation/hooks/globals';
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
-
+import { PaymentButtonTag } from '.';
 import styles from './payment.module.scss';
-import { useState, memo } from 'react';
 
 const PaymentStepComponent = () => {
   const { state, fee, selectedCategories, total } = useRegistrationFlow();
-  const [preferenceId, setPreferenceId] = useState<string | null>(null);
-  const isMobile = useIsMobile();
-  const [isLoading, setLoad] = useState<boolean>(false);
 
-  initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!);
-
-  const { tournament, athlete, teams: teamsByCategory } = state;
-
-  const handleCreatePreference = async () => {
-    setLoad(true);
-    const res = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        tournamentId: tournament?.id,
-        categories: selectedCategories,
-        athlete,
-        teamsByCategory,
-        total
-      })
-    });
-
-    if (!res.ok) {
-      throw new Error('Erro ao criar preferência');
-    }
-
-    const data = await res.json();
-    setPreferenceId(data.preferenceId);
-    setLoad(false);
-  };
+  const { tournament } = state;
 
   return (
     <section className={styles['payment']}>
@@ -132,32 +101,11 @@ const PaymentStepComponent = () => {
         </div>
 
         <div className={styles.contentButtons}>
-          {preferenceId && (
-            <Wallet
-              customization={{
-                checkout: { theme: { elementsColor: '#7300ff80' } }
-              }}
-              initialization={{
-                preferenceId,
-                redirectMode: isMobile ? 'self' : 'blank'
-              }}
-              locale='pt-BR'
-            />
-          )}
-
-          {!preferenceId && (
-            <ButtonTag
-              label={isLoading ? 'Criando pagamento...' : 'Finalizar inscrição'}
-              full
-              size='large'
-              primary
-              onClick={handleCreatePreference}
-            />
-          )}
+          <PaymentButtonTag />
         </div>
       </div>
     </section>
   );
 };
 
-export default memo(PaymentStepComponent);
+export default PaymentStepComponent;
