@@ -1,0 +1,214 @@
+@use 'styles/abstracts/functions' as *;
+@use 'styles/abstracts/breakpoints' as *;
+
+.listTeams {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  & > h2 {
+    width: 100%;
+    max-width: 280px;
+    font-weight: 600;
+    font-size: rem(28px);
+    line-height: 130%;
+    color: color(text, primary);
+    margin-top: 24px;
+    margin-bottom: rem(8px);
+
+    @include respond-to('md') {
+      max-width: none;
+      font-size: rem(40px);
+    }
+  }
+
+  & > p {
+    font-weight: 400;
+    font-size: rem(18px);
+    line-height: 130%;
+    color: color(neutrals, 004);
+    margin-bottom: 60px;
+
+    @include respond-to('md') {
+      font-size: rem(20px);
+    }
+  }
+
+  .contentStatus {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    @include respond-to('md') {
+      padding-right: 100px;
+    }
+
+    .headStatus {
+      width: 100%;
+      height: 48px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 rem(24px);
+
+      span {
+        font-weight: 500;
+        font-size: rem(20px);
+        line-height: 130%;
+        color: color(text, primary);
+
+        @include respond-to('md') {
+          &:nth-child(1) {
+            width: 50%;
+          }
+          &:nth-child(2) {
+            width: 25%;
+          }
+          &:nth-child(3) {
+            width: 25%;
+          }
+        }
+      }
+
+      @include respond-to('md') {
+        display: flex;
+      }
+    }
+
+    .bodyStatus {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+
+      li {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        border-radius: rem(16px);
+        background-color: color(background, tertiary);
+        transition: 0.175s linear;
+        position: relative;
+        padding: 16px;
+
+        & + li {
+          margin-top: 12px;
+        }
+
+        @include respond-to('md') {
+          flex-direction: row;
+          padding: 0 rem(24px);
+          background-color: transparent;
+          height: 80px;
+          align-items: center;
+          justify-content: space-between;
+
+          &:hover {
+            background-color: color(background, tertiary);
+          }
+
+          & + li {
+            margin-top: 0;
+          }
+        }
+
+        p {
+          width: 100%;
+          max-width: 180px;
+          flex-direction: column;
+          display: flex;
+          font-weight: 600;
+          font-size: rem(18px);
+          line-height: 130%;
+          color: color(text, primary);
+          margin-bottom: 24px;
+
+          & > span {
+            display: none;
+
+            @include respond-to('md') {
+              display: block;
+            }
+          }
+
+          @include respond-to('md') {
+            gap: 8px;
+            align-items: center;
+            width: 50%;
+            max-width: none;
+            flex-direction: row;
+            margin-bottom: 0;
+            white-space: nowrap;
+          }
+        }
+
+        div {
+          @include respond-to('md') {
+            &:nth-child(2) {
+              width: 25%;
+            }
+            &:nth-child(3) {
+              width: 25%;
+            }
+          }
+        }
+
+        .category {
+          font-weight: 400;
+          font-style: Regular;
+          font-size: 16px;
+          line-height: 130%;
+          color: color(neutrals, 004);
+
+          @include respond-to('md') {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            padding: 0 16px;
+            height: 37px;
+            width: fit-content;
+            background-color: color(neutrals, 003);
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 130%;
+            color: color(text, primary);
+          }
+        }
+
+        .status {
+          width: fit-content;
+          height: 37px;
+          border-radius: 999px;
+          padding: 0 32px;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 130%;
+          color: color(text, primary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          top: 28px;
+          right: 16px;
+
+          @include respond-to('md') {
+            position: unset;
+          }
+        }
+
+        .pending {
+          background-color: color(neutrals, yellow-100);
+        }
+        .paid {
+          background-color: color(neutrals, green-100);
+        }
+        .cancelled {
+          background-color: color(accent, danger);
+        }
+      }
+    }
+  }
+}
