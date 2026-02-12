@@ -2,23 +2,28 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { TabsTag } from '~/presentation/components/common';
 import styles from './tournament.module.scss';
+import { TeamItemTag } from './components/team-item';
 
-type TeamStatus = 'pending' | 'paid' | 'cancelled';
+export type TeamStatus = 'pending' | 'paid' | 'cancelled';
 
 type TeamAthlete = {
   athlete: {
     id: string;
     name: string;
+    email: string;
+    instagram: string;
+    phone: string;
+    uniformSize: string;
   };
 };
 
-type Team = {
+export type Team = {
   id: string;
   status: TeamStatus;
   athletes: TeamAthlete[];
 };
 
-type CategoryTeams = {
+export type CategoryTeams = {
   id: string;
   name: string;
   teams: Team[];
@@ -27,12 +32,6 @@ type CategoryTeams = {
 interface TournamentTeamsProps {
   categories: CategoryTeams[];
 }
-
-const status: Record<TeamStatus, string> = {
-  cancelled: 'Cancelada',
-  paid: 'Confirmada',
-  pending: 'Pendente'
-};
 
 function TournamentTeamsComponent({ categories }: TournamentTeamsProps) {
   const queryParams = useSearchParams();
@@ -51,13 +50,6 @@ function TournamentTeamsComponent({ categories }: TournamentTeamsProps) {
     params.set('category', categories[index].id);
 
     router.push(`?${params.toString()}`, { scroll: false });
-  };
-
-  const firstAndLastName = (name: string) => {
-    const firstName = name.split(' ')[0];
-    const lastName = name.split(' ').findLast(n => n);
-
-    return `${firstName} ${lastName}`;
   };
 
   return (
@@ -83,27 +75,7 @@ function TournamentTeamsComponent({ categories }: TournamentTeamsProps) {
 
               <ul className={styles.bodyStatus}>
                 {category.teams.map(team => (
-                  <li key={team.id}>
-                    <p>
-                      {firstAndLastName(team.athletes[0].athlete.name)}
-                      <span>e</span>{' '}
-                      {firstAndLastName(team.athletes[1].athlete.name)}
-                    </p>
-
-                    <div>
-                      <div className={styles.category}>{category.name}</div>
-                    </div>
-
-                    <div>
-                      <div
-                        className={[styles.status, styles[team.status]].join(
-                          ' '
-                        )}
-                      >
-                        {status[team.status]}
-                      </div>
-                    </div>
-                  </li>
+                  <TeamItemTag category={category} team={team} key={team.id} />
                 ))}
               </ul>
             </div>

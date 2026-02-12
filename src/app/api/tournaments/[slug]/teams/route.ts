@@ -26,7 +26,11 @@ export async function GET(
                     athlete: {
                       select: {
                         id: true,
-                        name: true
+                        name: true,
+                        email: true,
+                        instagram: true,
+                        phone: true,
+                        uniformSize: true
                       }
                     }
                   }
