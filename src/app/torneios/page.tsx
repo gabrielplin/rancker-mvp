@@ -4,7 +4,6 @@ import { getTournaments } from '~/utils/tournament/get-tournaments';
 
 export default async function AthletePage() {
   const tournaments = await getTournaments();
-  console.log('hello');
   return (
     <LogoutLayoutTag>
       <TournamentListTag tournament={tournaments} />

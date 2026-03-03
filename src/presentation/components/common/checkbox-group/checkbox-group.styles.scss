@@ -1,4 +1,4 @@
-@use 'styles/abstracts/functions' as *;
+@use '../../../../styles/abstracts/functions' as *;
 
 .checkbox-group {
   display: flex;
@@ -20,7 +20,7 @@
     background: #2c2b30; /* card base */
     cursor: pointer;
     user-select: none;
-    transition: background-color .15s ease;
+    transition: background-color 0.15s ease;
 
     &:hover {
       background: #34333a;
@@ -67,8 +67,11 @@
     background: transparent;
     display: grid;
     place-items: center;
-    transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
-    color: #111; 
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      transform 0.15s ease;
+    color: #111;
     flex: 0 0 auto;
   }
 
@@ -76,11 +79,13 @@
     width: rem(28px);
     height: rem(28px);
     opacity: 0;
-    transform: scale(.85);
-    transition: opacity .15s ease, transform .15s ease;
+    transform: scale(0.85);
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
     fill: currentColor;
   }
-  
+
   &__label-input {
     background-color: transparent;
     border: none;
@@ -90,7 +95,7 @@
     height: 48px;
     border-radius: rem(8px);
     outline: none;
-    
+
     &:focus {
       border: 2px solid color(pallete, primary);
     }
@@ -108,7 +113,9 @@
     cursor: pointer;
     font-size: rem(20px);
     color: color(neutrals, 004);
-    transition: color .15s ease, border-color .15s ease;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
 
     &:hover {
       border-color: color(neutrals, white);

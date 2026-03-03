@@ -1,4 +1,4 @@
-@use 'styles/abstracts/functions' as *;
+@use '../../../../styles/abstracts/functions' as *;
 
 .service-card {
   position: relative;
@@ -38,7 +38,10 @@
     border-radius: rem(16px);
     padding: rem(20px);
     min-height: rem(262px);
-    transition: background-color .15s ease, border-color .15s ease, transform .12s ease;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      transform 0.12s ease;
     border: 1px solid transparent;
     cursor: pointer;
 
@@ -58,12 +61,16 @@
     display: grid;
     place-items: center;
     color: #101010;
-    transition: background-color .15s ease, border-color .15s ease;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease;
   }
   &__check {
     opacity: 0;
-    transform: scale(.85);
-    transition: opacity .15s ease, transform .15s ease;
+    transform: scale(0.85);
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
   }
 
   &__content {

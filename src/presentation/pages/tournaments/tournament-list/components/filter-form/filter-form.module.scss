@@ -1,4 +1,4 @@
-@use 'styles/abstracts/functions'as *;
+@use '../../../../../../styles/abstracts/functions' as *;
 
 .form {
   display: flex;
@@ -37,5 +37,5 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap:rem(8px)
+  gap: rem(8px);
 }

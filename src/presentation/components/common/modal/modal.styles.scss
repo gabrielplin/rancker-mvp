@@ -1,5 +1,5 @@
-@use 'styles/abstracts/breakpoints' as *;
-@use 'styles/abstracts/functions' as *;
+@use '../../../../styles/abstracts/breakpoints' as *;
+@use '../../../../styles/abstracts/functions' as *;
 
 $modal-overlay: rgba(0, 0, 0, 0.44);
 $modal-bg: #343434;

@@ -61,6 +61,7 @@ model Team {
   stripeSessionId String
   status          TeamStatus
   createdAt       DateTime      @default(now())
+  emailSent       Boolean       @default(false)
   paymentId       String
   category        Category      @relation(fields: [categoryId], references: [id])
   tournament      Tournament    @relation(fields: [tournamentId], references: [id])

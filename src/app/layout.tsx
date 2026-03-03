@@ -40,9 +40,9 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang='pt-br' className={figtree.variable}>
-      <AlertModalProvider>
-        <body>{children}</body>
-      </AlertModalProvider>
+      {/* <AlertModalProvider> */}
+      <body>{children}</body>
+      {/* </AlertModalProvider> */}
     </html>
   );
 }

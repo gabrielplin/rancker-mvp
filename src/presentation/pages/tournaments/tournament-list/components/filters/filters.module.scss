@@ -1,22 +1,22 @@
-@use 'styles/abstracts/functions'as *;
+@use '../../../../../../styles/abstracts/functions' as *;
 
 .container {
   display: flex;
   flex-direction: row;
   gap: rem(16px);
   width: 100%;
-  align-items:end;
+  align-items: end;
 }
 
 .filter__button {
   display: flex;
   align-items: center;
   border-radius: 99px;
-  background-color: #7F7F7F1A;
+  background-color: #7f7f7f1a;
   border: none;
   width: rem(136px);
   height: rem(48px);
-  color: color(neutrals,white);
+  color: color(neutrals, white);
   gap: rem(8px);
   justify-content: center;
   cursor: pointer;

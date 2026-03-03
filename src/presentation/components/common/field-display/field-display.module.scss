@@ -1,13 +1,13 @@
-@use 'styles/abstracts/functions' as *;
+@use '../../../../styles/abstracts/functions' as *;
 
 .field {
   display: flex;
   align-items: center;
   gap: rem(16px);
-  
+
   min-height: rem(65px);
-  
-  background: #F7F7F70D; 
+
+  background: #f7f7f70d;
   border-radius: 16px;
   padding: 16px 20px;
 }
@@ -40,5 +40,10 @@
 }
 
 /* Modificadores opcionais */
-.field--sm .field__value { font-size: 16px; font-weight: 600; }
-.field--muted .field__value { color: rgba(255,255,255,0.55); }
+.field--sm .field__value {
+  font-size: 16px;
+  font-weight: 600;
+}
+.field--muted .field__value {
+  color: rgba(255, 255, 255, 0.55);
+}
