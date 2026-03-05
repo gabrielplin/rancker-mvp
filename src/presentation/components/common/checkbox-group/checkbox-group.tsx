@@ -20,6 +20,7 @@ type CheckboxGroupProps<T extends FieldValues> = {
   disabled?: boolean;
   textPlaceholder?: string;
   addText?: string;
+  renderChildren?: (option: CheckboxGroupOption) => React.ReactNode;
 };
 
 const makeId = () =>
@@ -35,7 +36,8 @@ function CheckboxGroupComponent<T extends FieldValues>({
   enableTextInput = true,
   disabled = false,
   textPlaceholder = 'Digite aqui...',
-  addText = 'Adicionar'
+  addText = 'Adicionar',
+  renderChildren
 }: CheckboxGroupProps<T>) {
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const setInputRef =
@@ -118,6 +120,12 @@ function CheckboxGroupComponent<T extends FieldValues>({
                       onChange={e => setLabel(opt.value, e.target.value)}
                     />
                   </label>
+
+                  {opt.checked && renderChildren && (
+                    <div className='checkbox-group__children'>
+                      {renderChildren(opt)}
+                    </div>
+                  )}
                 </div>
               );
             })}

@@ -1,0 +1,40 @@
+@use 'styles/abstracts/functions' as *;
+@use 'styles/abstracts/breakpoints' as *;
+
+.container {
+  padding: 20px;
+
+  h2 {
+    font-size: rem(40px);
+  }
+
+  p {
+    font-size: rem(16px);
+    margin-bottom: 20px;
+  }
+}
+
+.form {
+  width: 100%;
+  max-width: 750px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .select-wrapper {
+    width: 100%;
+    max-width: 250px !important;
+  }
+  .checkbox-group {
+    margin-top: 10px;
+
+    .checkbox-group__item label {
+      padding: 16px;
+    }
+  }
+
+  button {
+    width: 100%;
+    max-width: 220px;
+  }
+}
